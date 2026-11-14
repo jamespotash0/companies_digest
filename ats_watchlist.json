@@ -1610,7 +1610,8 @@
     "cyclicmaterialsinc",
     "educate",
     "medallionakafirstlayerai",
-    "mammothbrands"
+    "mammothbrands",
+    "axiomaticai"
   ],
   "lever": [
     "rise",
@@ -3822,7 +3823,13 @@
     "kindred",
     "redmetals",
     "orakloncology",
-    "delphina"
+    "delphina",
+    "tilthq",
+    "remberg",
+    "tomo",
+    "codex",
+    "careers.mural",
+    "concurrence"
   ],
   "checked": [
     "alloy",
@@ -5778,7 +5785,8 @@
     "orakl oncology",
     "events-focused fan-intelligence startup toutix",
     "delphina",
-    "sagittarius logistics"
+    "sagittarius logistics",
+    "ex-anthropic researchers' startup mirendil"
   ],
   "workable": [
     "oxford-quantum-circuits-8",
@@ -6007,7 +6015,10 @@
     "adverity",
     "acoustic-3",
     "senseye",
-    "compass-education"
+    "compass-education",
+    "liferaft",
+    "swimply",
+    "usemate"
   ],
   "smartrecruiters": [
     "Canva",
@@ -6431,7 +6442,7 @@
     "jyve": 600,
     "funnel": 120,
     "juvo": 120,
-    "artera": 120,
+    "artera": 600,
     "well health": 5,
     "textnow": 600,
     "wag": 120,
@@ -6481,7 +6492,7 @@
     "yuma": 25,
     "flock.io": 25,
     "blockchain.com": 3000,
-    "coinbase": 3000,
+    "coinbase": 15000,
     "kraken": 3000,
     "bitgo": 600,
     "coin metrics": 120,
@@ -6490,7 +6501,7 @@
     "coinflow labs": 25,
     "ghost": 600,
     "hinge": 600,
-    "xwing": 25,
+    "xwing": 5,
     "conduit health": 25,
     "nirvana health": 120,
     "attentive": 3000,
@@ -6499,11 +6510,11 @@
     "influur": 120,
     "sprout solutions": 600,
     "netradyne": 600,
-    "shield ai": 3000,
+    "shield ai": 600,
     "ual\u00e1": 3000,
     "flatfile": 120,
     "socure": 600,
-    "x.ai": 15000,
+    "x.ai": 600,
     "odeko": 120,
     "remote": 15000,
     "namely": 120,
@@ -6644,7 +6655,7 @@
     "mindbridge ai": 600,
     "stay22": 120,
     "algolux": 25,
-    "clutch canada": 600,
+    "clutch canada": 120,
     "insight engines": 5,
     "mejuri": 600,
     "quotemachine": 25,
@@ -6652,7 +6663,7 @@
     "openai": 3000,
     "cognition": 600,
     "baseten": 120,
-    "etched": 120,
+    "etched": 600,
     "paystand": 120,
     "jackpocket": 120,
     "human api": 25,
@@ -6668,7 +6679,7 @@
     "chainguard": 600,
     "interview kickstart": 600,
     "pinterest careers": 15000,
-    "coda": 120,
+    "coda": 600,
     "hopskipdrive": 600,
     "avantstay": 600,
     "mainspring energy": 600,
@@ -6693,7 +6704,7 @@
     "acorns": 600,
     "frank & oak": 600,
     "static media": 25,
-    "flip": 120,
+    "flip": 600,
     "nativo": 120,
     "merit beauty": 120,
     "marfeel": 120,
@@ -6737,7 +6748,7 @@
     "delineate": 25,
     "student ready strategies": 5,
     "boxcrush": 25,
-    "onebrief": 120,
+    "onebrief": 600,
     "collectly": 120,
     "glean": 3000,
     "anrok": 120,
@@ -6756,7 +6767,7 @@
     "carefeed": 120,
     "simbryo": 5,
     "soundtrace": 25,
-    "polymarket": 25,
+    "polymarket": 120,
     "crusoe": 600,
     "parity technologies": 120,
     "e-zinc": 120,
@@ -6766,7 +6777,7 @@
     "may mobility": 600,
     "immutable systems": 600,
     "athena": 120,
-    "auror": 600,
+    "auror": 120,
     "instant": 25,
     "indebted": 600,
     "safewill": 25,
@@ -6815,7 +6826,7 @@
     "lottie": 120,
     "scarlet": 120,
     "flagstone": 600,
-    "robco": 25,
+    "robco": 120,
     "pqshield": 120,
     "anomali": 600,
     "traba": 600,
@@ -7177,7 +7188,7 @@
     "invinity energy systems plc": 120,
     "leap tools": 600,
     "kavodax": 5,
-    "rippling": 15000,
+    "rippling": 3000,
     "university of toronto": 15000,
     "chargelab": 120,
     "linkedin": 15000,
@@ -7216,7 +7227,7 @@
     "earnin": 600,
     "docker": 3000,
     "turo": 600,
-    "workstream": 600,
+    "workstream": 25,
     "ethos life": 600,
     "withclutch": 600,
     "amplify education": 3000,
@@ -7231,7 +7242,7 @@
     "forter": 600,
     "bluevoyant": 600,
     "aviron interactive": 120,
-    "ast spacemobile": 600,
+    "ast spacemobile": 3000,
     "beekeeper": 600,
     "vectra": 600,
     "dispelix": 120,
@@ -7352,7 +7363,7 @@
     "vaxess technologies": 25,
     "singlestore": 25,
     "lucid": 3000,
-    "solo.io": 120,
+    "solo.io": 600,
     "garner health": 600,
     "legora": 600,
     "silverfort": 600,
@@ -7413,7 +7424,7 @@
     "cookunity": 600,
     "focal systems": 120,
     "garden": 120,
-    "tandem": 600,
+    "tandem": 25,
     "swap": 120,
     "reserv": 600,
     "chatchamp": 25,
@@ -7474,7 +7485,7 @@
     "peak energy": 120,
     "reframe systems": 120,
     "humi hr": 120,
-    "tealbook": 120,
+    "tealbook": 25,
     "northone": 25,
     "stackadapt": 3000,
     "mars discovery district": 600,
@@ -7631,7 +7642,7 @@
     "warp": 120,
     "foodsmart": 600,
     "vacatia": 120,
-    "super.com": 120,
+    "super.com": 600,
     "issue one": 25,
     "asian law caucus": 25,
     "givedirectly": 600,
@@ -7690,7 +7701,7 @@
     "nectar social": 120,
     "b-stock solutions": 600,
     "praxispro ai": 25,
-    "basecamp research": 120,
+    "basecamp research": 25,
     "madison reed": 600,
     "mode analytics": 600,
     "kurtosys": 120,
@@ -7710,7 +7721,7 @@
     "stripe": 15000,
     "intuit": 15000,
     "look who\u2019s charging": 5,
-    "adyen": 15000,
+    "adyen": 3000,
     "unleash live": 25,
     "acretrader": 25,
     "placements.io": 120,
@@ -7758,7 +7769,7 @@
     "skinny dipped almonds": 25,
     "the farmer's dog": 600,
     "poppi": 600,
-    "whoop": 600,
+    "whoop": 3000,
     "beekeeper's naturals": 120,
     "homebase": 3000,
     "lucidum": 25,
@@ -7817,7 +7828,7 @@
     "theoris services": 120,
     "healthsnap": 120,
     "threshold 360": 25,
-    "flex": 600,
+    "flex": 120,
     "quanthub": 25,
     "front finance": 120,
     "presence (application software)": 25,
@@ -8051,7 +8062,7 @@
     "caju": 600,
     "illumio": 600,
     "qive": 600,
-    "franq openbank": 600,
+    "franq openbank": 120,
     "revelo": 600,
     "sendcloud": 600,
     "defense unicorns": 120,
@@ -8376,7 +8387,7 @@
     "venice": 25,
     "nocd": 600,
     "quantum dice": 25,
-    "rain": 25,
+    "rain": 120,
     "gupy": 600,
     "numeo": 25,
     "nfx": 120,
@@ -8385,7 +8396,7 @@
     "in-charge energy": 120,
     "38 degrees north": 25,
     "everytable": 120,
-    "ripple foods": 120,
+    "ripple foods": 25,
     "oak ridge national laboratory": 15000,
     "national beef": 3000,
     "altec industries": 3000,
@@ -8482,7 +8493,7 @@
     "duetti": 120,
     "liquibase": 120,
     "suraasa": 120,
-    "campus": 600,
+    "campus": 3000,
     "nationgraph": 25,
     "rosie": 5,
     "stoplight": 5,
@@ -8573,7 +8584,7 @@
     "philips": 15000,
     "deephealth": 600,
     "sanofi": 15000,
-    "navihealth": 3000,
+    "navihealth": 600,
     "opto biosystems": 25,
     "arbor energy": 120,
     "debut biotech": 120,
@@ -8740,7 +8751,7 @@
     "ellipsis labs": 5,
     "fomo": 5,
     "nous research": 25,
-    "sphere": 25,
+    "sphere": 5,
     "veda": 25,
     "hopscotch primary care": 120,
     "strive health": 600,
@@ -8818,7 +8829,7 @@
     "upgrade": 3000,
     "coreweave": 3000,
     "anaplan": 3000,
-    "deel": 15000,
+    "deel": 3000,
     "silk": 120,
     "avantis team": 25,
     "nimble": 120,
@@ -8973,7 +8984,7 @@
     "shypple": 120,
     "wonderkind": 120,
     "yourcampus": 120,
-    "metycle": 25,
+    "metycle": 5,
     "voicebooking.com": 120,
     "ready rebound": 120,
     "docstation": 25,
@@ -9004,7 +9015,7 @@
     "crowdfarming": 120,
     "spotahome": 600,
     "drift": 600,
-    "daybreak health": 600,
+    "daybreak health": 120,
     "gather": 5,
     "blackbird health": 25,
     "concert health": 120,
@@ -9081,7 +9092,7 @@
     "scout": 25,
     "edge impulse": 120,
     "nerdio": 600,
-    "tempo": 600,
+    "tempo": 120,
     "lvt (liveview technologies)": 600,
     "equipmentshare": 15000,
     "fidalgo bay resort": 600,
@@ -9358,7 +9369,7 @@
     "2ulaundry": 120,
     "salesloft": 3000,
     "wayflyer": 600,
-    "workit health": 600,
+    "workit health": 120,
     "storee": 25,
     "pockyt": 25,
     "hemster": 25,
@@ -9470,7 +9481,7 @@
     "axoniq": 25,
     "old edwards hospitality group": 120,
     "the little nell": 120,
-    "spellbook": 25,
+    "spellbook": 120,
     "talkatoo": 25,
     "anessa": 25,
     "carbide": 25,
@@ -9522,7 +9533,7 @@
     "parspec": 120,
     "linkedfield": 5,
     "hinkle contracting company, llc": 120,
-    "beta technologies": 600,
+    "beta technologies": 3000,
     "redwood materials": 600,
     "rivian": 15000,
     "amogy": 120,
@@ -9560,7 +9571,7 @@
     "zorus, inc.": 25,
     "elevva": 120,
     "kontempo": 25,
-    "glacier": 25,
+    "glacier": 120,
     "bulu": 120,
     "encounter telehealth": 25,
     "companycam": 600,
@@ -9756,7 +9767,7 @@
     "the graph": 120,
     "interlay": 25,
     "t3rn": 25,
-    "aurora": 25,
+    "aurora": 3000,
     "rarible": 120,
     "akash network": 120,
     "gelato": 25,
@@ -10317,7 +10328,7 @@
     "level20": 120,
     "excelero storage": 25,
     "cylite": 120,
-    "hatch": 25,
+    "hatch": 600,
     "saic": 15000,
     "leidos": 15000,
     "athos": 120,
@@ -10562,7 +10573,7 @@
     "granify": 25,
     "m + r": 600,
     "friends of the earth": 120,
-    "national audubon society (usa)": 600,
+    "national audubon society (usa)": 3000,
     "valon technologies": 600,
     "highnote": 120,
     "first due": 600,
@@ -10767,7 +10778,7 @@
     "discord": 3000,
     "flipside crypto": 120,
     "oraan": 25,
-    "mural": 600,
+    "mural": 25,
     "axial networks": 120,
     "glossier": 600,
     "palmetto": 600,
@@ -11112,7 +11123,7 @@
     "beam": 600,
     "treasuryspring": 120,
     "galxe": 120,
-    "li.fi": 25,
+    "li.fi": 120,
     "altered state machine": 25,
     "livepeer": 25,
     "mesha": 25,
@@ -17291,218 +17302,250 @@
     "disperse.io": 120,
     "chancen international": 120,
     "educate!": 600,
-    "morningstar": 15000
+    "morningstar": 15000,
+    "kitro": 25,
+    "resources legacy fund": 120,
+    "the charles darwin foundation, inc.": 120,
+    "ezeebit": 5,
+    "concurrence": 5,
+    "jewish social justice roundtable": 5,
+    "the leffell school": 120,
+    "checkmate": 120,
+    "f\u00e9lix": 120,
+    "again": 120,
+    "tomo": 120,
+    "collage hr": 25,
+    "clir renewables": 25,
+    "c&s engineers": 600,
+    "onegroup": 600,
+    "remberg": 120,
+    "teachworks": 5,
+    "payment source": 25,
+    "liferaft": 120,
+    "swimply": 25,
+    "alta": 5,
+    "lun": 25,
+    "corfix": 25,
+    "european climate foundation": 600,
+    "xebia": 3000,
+    "sellcord": 120,
+    "enlaza therapeutics": 120,
+    "usafacts": 120,
+    "naf": 3000,
+    "codex": 5,
+    "lobos1707": 25,
+    "axiomatic ai": 5
   },
   "pending": {
     "edra": {
       "name": "Edra",
       "domain": "edra.ai",
       "first_seen": "2026-10-01",
-      "tries": 9,
-      "last_try": "2026-11-13"
+      "tries": 10,
+      "last_try": "2026-11-14"
     },
     "thresh consulting": {
       "name": "Thresh Consulting",
       "domain": "threshconsulting.com",
       "first_seen": "2026-10-01",
-      "tries": 6,
-      "last_try": "2026-11-13"
+      "tries": 7,
+      "last_try": "2026-11-14"
     },
     "masterpiece": {
       "name": "Masterpiece",
       "domain": "masterpiece.ai",
       "first_seen": "2026-10-01",
-      "tries": 7,
-      "last_try": "2026-11-13"
+      "tries": 8,
+      "last_try": "2026-11-14"
     },
     "happyrobot": {
       "name": "HappyRobot",
       "domain": "happyrobot.ai",
       "first_seen": "2026-10-01",
-      "tries": 8,
-      "last_try": "2026-11-13"
+      "tries": 9,
+      "last_try": "2026-11-14"
     },
     "on me gifting": {
       "name": "On Me Gifting",
       "domain": "onmegifting.com",
       "first_seen": "2026-10-01",
-      "tries": 7,
-      "last_try": "2026-11-13"
+      "tries": 8,
+      "last_try": "2026-11-14"
     },
     "landed": {
       "name": "Landed",
       "domain": "landed.ai",
       "first_seen": "2026-10-01",
-      "tries": 7,
-      "last_try": "2026-11-13"
+      "tries": 8,
+      "last_try": "2026-11-14"
     },
     "workwhile": {
       "name": "WorkWhile",
       "domain": "workwhile.com",
       "first_seen": "2026-10-01",
-      "tries": 6,
-      "last_try": "2026-11-13"
+      "tries": 7,
+      "last_try": "2026-11-14"
     },
     "vectorshift": {
       "name": "VectorShift",
       "domain": "vectorshift.ai",
       "first_seen": "2026-10-01",
-      "tries": 6,
-      "last_try": "2026-11-13"
+      "tries": 7,
+      "last_try": "2026-11-14"
     },
     "plaid": {
       "name": "Plaid",
       "domain": "plaid.com",
       "first_seen": "2026-10-01",
-      "tries": 7,
-      "last_try": "2026-11-13"
+      "tries": 8,
+      "last_try": "2026-11-14"
     },
     "wayco": {
       "name": "Wayco",
       "domain": "wayco.com",
       "first_seen": "2026-10-01",
-      "tries": 6,
-      "last_try": "2026-11-13"
+      "tries": 7,
+      "last_try": "2026-11-14"
     },
     "type": {
       "name": "Type",
       "domain": "",
       "first_seen": "2026-10-01",
-      "tries": 6,
-      "last_try": "2026-11-13"
+      "tries": 7,
+      "last_try": "2026-11-14"
     },
     "control seat": {
       "name": "Control Seat",
       "domain": "controlseat.com",
       "first_seen": "2026-10-01",
-      "tries": 9,
-      "last_try": "2026-11-13"
+      "tries": 10,
+      "last_try": "2026-11-14"
     },
     "realpact": {
       "name": "RealPact",
       "domain": "realpact.ai",
       "first_seen": "2026-10-01",
-      "tries": 7,
-      "last_try": "2026-11-13"
+      "tries": 8,
+      "last_try": "2026-11-14"
     },
     "metriport": {
       "name": "Metriport",
       "domain": "",
       "first_seen": "2026-10-01",
-      "tries": 7,
-      "last_try": "2026-11-13"
+      "tries": 8,
+      "last_try": "2026-11-14"
     },
     "civilgrid": {
       "name": "CivilGrid",
       "domain": "",
       "first_seen": "2026-10-01",
-      "tries": 9,
-      "last_try": "2026-11-13"
+      "tries": 10,
+      "last_try": "2026-11-14"
     },
     "infimaker": {
       "name": "InfiMaker",
       "domain": "",
       "first_seen": "2026-10-01",
-      "tries": 7,
-      "last_try": "2026-11-13"
+      "tries": 8,
+      "last_try": "2026-11-14"
     },
     "manchester's revnu": {
       "name": "Manchester's Revnu",
       "domain": "revnu.com",
       "first_seen": "2026-10-01",
-      "tries": 7,
-      "last_try": "2026-11-13"
+      "tries": 8,
+      "last_try": "2026-11-14"
     },
     "\u2018recruiting is next\u2019: metaview": {
       "name": "\u2018Recruiting is next\u2019: Metaview",
       "domain": "metaview.ai",
       "first_seen": "2026-10-01",
-      "tries": 6,
-      "last_try": "2026-11-13"
+      "tries": 7,
+      "last_try": "2026-11-14"
     },
     "preventive healthcare startup vytalyou": {
       "name": "Preventive Healthcare Startup Vytalyou",
       "domain": "vytalyou.com",
       "first_seen": "2026-10-01",
-      "tries": 7,
-      "last_try": "2026-11-13"
+      "tries": 8,
+      "last_try": "2026-11-14"
     },
     "exclusive | ai cyber startup armadin": {
       "name": "Exclusive | AI Cyber Startup Armadin",
       "domain": "",
       "first_seen": "2026-10-01",
-      "tries": 8,
-      "last_try": "2026-11-13"
+      "tries": 9,
+      "last_try": "2026-11-14"
     },
     "video ai startup synthesia": {
       "name": "Video AI Startup Synthesia",
       "domain": "",
       "first_seen": "2026-10-01",
-      "tries": 6,
-      "last_try": "2026-11-13"
+      "tries": 7,
+      "last_try": "2026-11-14"
     },
     "student-led dorm room fund": {
       "name": "Student-led Dorm Room Fund",
       "domain": "",
       "first_seen": "2026-10-01",
-      "tries": 6,
-      "last_try": "2026-11-13"
+      "tries": 7,
+      "last_try": "2026-11-14"
     },
     "hop aero": {
       "name": "Hop Aero",
       "domain": "",
       "first_seen": "2026-10-01",
-      "tries": 8,
-      "last_try": "2026-11-13"
+      "tries": 9,
+      "last_try": "2026-11-14"
     },
     "satlyt": {
       "name": "Satlyt",
       "domain": "",
       "first_seen": "2026-10-01",
-      "tries": 6,
-      "last_try": "2026-11-13"
+      "tries": 7,
+      "last_try": "2026-11-14"
     },
     "zaperon": {
       "name": "Zaperon",
       "domain": "",
       "first_seen": "2026-10-01",
-      "tries": 6,
-      "last_try": "2026-11-13"
+      "tries": 7,
+      "last_try": "2026-11-14"
     },
     "m-based": {
       "name": "M-Based",
       "domain": "",
       "first_seen": "2026-10-01",
-      "tries": 7,
-      "last_try": "2026-11-13"
+      "tries": 8,
+      "last_try": "2026-11-14"
     },
     "flowscope": {
       "name": "flowscope",
       "domain": "",
       "first_seen": "2026-10-01",
-      "tries": 8,
-      "last_try": "2026-11-13"
+      "tries": 9,
+      "last_try": "2026-11-14"
     },
     "metaview": {
       "name": "Metaview",
       "domain": "",
       "first_seen": "2026-10-01",
-      "tries": 7,
-      "last_try": "2026-11-13"
+      "tries": 8,
+      "last_try": "2026-11-14"
     },
     "inbolt": {
       "name": "Inbolt",
       "domain": "",
       "first_seen": "2026-10-01",
-      "tries": 8,
-      "last_try": "2026-11-13"
+      "tries": 9,
+      "last_try": "2026-11-14"
     },
     "doss": {
       "name": "DOSS",
       "domain": "doss.com",
       "first_seen": "2026-10-02",
-      "tries": 6,
-      "last_try": "2026-11-13"
+      "tries": 7,
+      "last_try": "2026-11-14"
     },
     "withcoverage": {
       "name": "WithCoverage",
@@ -17514,43 +17557,43 @@
       "name": "Prosper",
       "domain": "prosper.com",
       "first_seen": "2026-10-02",
-      "tries": 3,
-      "last_try": "2026-11-13"
+      "tries": 4,
+      "last_try": "2026-11-14"
     },
     "bastion": {
       "name": "Bastion",
       "domain": "bastion.ai",
       "first_seen": "2026-10-02",
-      "tries": 6,
-      "last_try": "2026-11-13"
+      "tries": 7,
+      "last_try": "2026-11-14"
     },
     "halluminate": {
       "name": "Halluminate",
       "domain": "halluminate.ai",
       "first_seen": "2026-10-02",
-      "tries": 5,
-      "last_try": "2026-11-13"
+      "tries": 6,
+      "last_try": "2026-11-14"
     },
     "offensive security startup armadin": {
       "name": "Offensive Security Startup Armadin",
       "domain": "armadin.com",
       "first_seen": "2026-10-02",
-      "tries": 5,
-      "last_try": "2026-11-13"
+      "tries": 6,
+      "last_try": "2026-11-14"
     },
     "global payments infra startup walapay": {
       "name": "Global payments infra startup Walapay",
       "domain": "walapay.io",
       "first_seen": "2026-10-02",
-      "tries": 5,
-      "last_try": "2026-11-13"
+      "tries": 6,
+      "last_try": "2026-11-14"
     },
     "photon": {
       "name": "Photon",
       "domain": "photon.dev",
       "first_seen": "2026-10-02",
-      "tries": 5,
-      "last_try": "2026-11-13"
+      "tries": 6,
+      "last_try": "2026-11-14"
     },
     "unveilr ai": {
       "name": "Unveilr AI",
@@ -17562,29 +17605,29 @@
       "name": "Good Tape",
       "domain": "",
       "first_seen": "2026-10-02",
-      "tries": 5,
-      "last_try": "2026-11-13"
+      "tries": 6,
+      "last_try": "2026-11-14"
     },
     "palebluedot ai": {
       "name": "PaleBlueDot AI",
       "domain": "",
       "first_seen": "2026-10-02",
-      "tries": 5,
-      "last_try": "2026-11-13"
+      "tries": 6,
+      "last_try": "2026-11-14"
     },
     "kevin mandia's new 'agent swarm' security startup armadin": {
       "name": "Kevin Mandia's new 'agent swarm' security startup Armadin",
       "domain": "",
       "first_seen": "2026-10-02",
-      "tries": 5,
-      "last_try": "2026-11-13"
+      "tries": 6,
+      "last_try": "2026-11-14"
     },
     "nine-person halluminate": {
       "name": "Nine-person Halluminate",
       "domain": "",
       "first_seen": "2026-10-02",
-      "tries": 5,
-      "last_try": "2026-11-13"
+      "tries": 6,
+      "last_try": "2026-11-14"
     },
     "flexpoint": {
       "name": "FlexPoint",
@@ -21701,6 +21744,12 @@
       "domain": "",
       "first_seen": "2026-11-13",
       "tries": 1
+    },
+    "ex-anthropic researchers' startup mirendil": {
+      "name": "Ex-Anthropic researchers' startup Mirendil",
+      "domain": "",
+      "first_seen": "2026-11-14",
+      "tries": 1
     }
   },
   "funded": {
@@ -22720,7 +22769,7 @@
     "this startup": {
       "name": "This Startup",
       "amount": "$1B",
-      "date": "2026-11-13",
+      "date": "2026-11-14",
       "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxObkxPOGVxOXJ1ZHo1Wjh4YjRHamNPWFZUUXhWMG1FSU5EUmZRcHZ2QXRyWk5Va1hiRFEyOHdlZGZkNTkwYjJkVUh6Y3l4TVhuTnFiSDRfa2M4amV6ODc5MnFSVi0xd3ZsTzVEZ2lEdlNfVE1OX2ZKSkJDZDlaUHNFV3JsVHhMX3ZEOGlrdEpRMEtTMGxyck1kbVlPSWhnSmZuelVZRnRNcUR2M0dULWJpd3phaGRoOXc5WXVz?oc=5",
       "tokens": []
     },
@@ -27327,8 +27376,8 @@
       "name": "Ridero",
       "round": "Pre-seed",
       "amount": "$2.7M",
-      "date": "2026-11-10",
-      "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxQZ2EzemxGSGY0S2h2OHNscHZnZVM0b3pjRENZb0doaTQxQnNwVWNTbUFoaWdpanU2dk1YZEczajU2VU1RWGk4VXlsVHpjUzhqZnVkb3FZeEgyMllySTVIX1NUVFMwWWxQZnhzQlUxTnJHZDAxcDRZeHhtTVVDSjkxeVFfaDhxU3NmV2F3aFZCTUxZZ3d0dHZHNmxNV2ZXRm8?oc=5",
+      "date": "2026-11-13",
+      "url": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxPZElnTWtMS2M5TVMxUzRpQTZFUHM3Wlp1aGlCVTBzUkhLTm5KV2ZBN09QWThlMzN6NHFGeW1jMnNGc095djg0bHVCdDJaWUMwNThuZHlRdzF1bG1VTjB3VExsQU43UHdJUXFFN2RGbTlUN1U5RmhPelJPY1F5dXUwUFl1MXoxbFVHaEstcTBub25oUEllbWlfZ1hFU3FlUnVMdFlpYzdZT1lCaDNqU00xM19YODFXNUY2QmJ0bGxpTWtVMDMyNWU1Y0ZFTzlrR3V4ejRF?oc=5",
       "tokens": []
     },
     "bucketlistt.com": {
@@ -27720,6 +27769,13 @@
       "amount": "$1.2M",
       "date": "2026-11-13",
       "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxOYXY3bU5HSkJaUGxsT20xb0VCMVFRR3ZMMGw2SFlnRFVSRFdHY1oyclZEY2hEajlZc05ydGZvcWtfbVpYOFM5VG50LXZIVmRUOTAzZHB4QVlTOXhoRUluUkdnU2N3Y0VtcTFRZVFuekRPZDJBb25KZ0YzenVuQUhEbi0xY3hSa0VKUUZaZzJYSXRZVnBJNGhrVG5mSmplandjY1NEOGRwNlE?oc=5",
+      "tokens": []
+    },
+    "ex-anthropic researchers' startup mirendil": {
+      "name": "Ex-Anthropic researchers' startup Mirendil",
+      "amount": "$1B",
+      "date": "2026-11-13",
+      "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxPX1F1U29ZNGdON1pPZ09wdTdGMWtPSXpmTmJWOWI0bTY0djNES2Z2SFhYOTRNdnV5YTNzX2NGanU1Uks5bmxKMmh1NVFVOUhZZVZ0Mi01NkZNQmdTTThwZEFGNldBYzZlaU9BYjhXWEUyOERETzBFT2ZmbDVGQUhBRlZLaDZmRW50UlJLZ2Iwa2F3WkJGR211Z2tmWEhwTThHRjZwN2E1d1hZWHNNTWZfWjhOU2RGbDQ1bFlVVXNB?oc=5",
       "tokens": []
     }
   },
@@ -30909,7 +30965,7 @@
     "ridero": {
       "name": "Ridero",
       "round": "Pre-seed",
-      "date": "2026-11-10",
+      "date": "2026-11-13",
       "source": "funding digest",
       "tokens": []
     },
