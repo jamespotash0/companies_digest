@@ -1611,7 +1611,8 @@
     "educate",
     "medallionakafirstlayerai",
     "mammothbrands",
-    "axiomaticai"
+    "axiomaticai",
+    "workatbackbase"
   ],
   "lever": [
     "rise",
@@ -3830,7 +3831,11 @@
     "tomo",
     "codex",
     "careers.mural",
-    "concurrence"
+    "concurrence",
+    "sequencing",
+    "lucis",
+    "seldon",
+    "eragon"
   ],
   "checked": [
     "alloy",
@@ -5788,7 +5793,13 @@
     "delphina",
     "sagittarius logistics",
     "ex-anthropic researchers' startup mirendil",
-    "insurtech stitchstudio"
+    "insurtech stitchstudio",
+    "bevado",
+    "cardiovascular imaging startup raywatt",
+    "former freshworks executives raise $53 million for ai-native",
+    "ai startup numa",
+    "bharat semi",
+    "freshworks alums raise $53m to take on salesforce, hubspot w"
   ],
   "workable": [
     "oxford-quantum-circuits-8",
@@ -6358,7 +6369,8 @@
     "syenex",
     "pacific-whale-foundation",
     "soltis-advisors",
-    "smartwyre"
+    "smartwyre",
+    "lightship"
   ],
   "sizes": {
     "jumpcloud": 600,
@@ -6516,7 +6528,7 @@
     "ual\u00e1": 3000,
     "flatfile": 120,
     "socure": 600,
-    "x.ai": 600,
+    "x.ai": 15000,
     "odeko": 120,
     "remote": 15000,
     "namely": 120,
@@ -6657,7 +6669,7 @@
     "mindbridge ai": 600,
     "stay22": 120,
     "algolux": 25,
-    "clutch canada": 600,
+    "clutch canada": 120,
     "insight engines": 5,
     "mejuri": 600,
     "quotemachine": 25,
@@ -6665,7 +6677,7 @@
     "openai": 3000,
     "cognition": 600,
     "baseten": 120,
-    "etched": 600,
+    "etched": 120,
     "paystand": 120,
     "jackpocket": 120,
     "human api": 25,
@@ -6781,11 +6793,11 @@
     "athena": 120,
     "auror": 120,
     "instant": 25,
-    "indebted": 600,
+    "indebted": 120,
     "safewill": 25,
     "mx51": 120,
     "osmind": 25,
-    "rho": 600,
+    "rho": 120,
     "salt security": 120,
     "aera technology": 600,
     "commonwealth fusion systems": 3000,
@@ -6879,7 +6891,7 @@
     "zencargo": 120,
     "quantum-systems": 600,
     "c8 health": 25,
-    "navina": 120,
+    "navina": 600,
     "evinced": 120,
     "trigo": 120,
     "zenity": 120,
@@ -6948,12 +6960,12 @@
     "turing": 3000,
     "catena clearing": 25,
     "unit21": 120,
-    "vanta": 3000,
+    "vanta": 600,
     "siteline": 25,
     "regie": 120,
     "transcend": 120,
     "airtable": 600,
-    "muon space": 600,
+    "muon space": 120,
     "titan": 600,
     "forethought": 120,
     "mill": 600,
@@ -7190,7 +7202,7 @@
     "invinity energy systems plc": 120,
     "leap tools": 600,
     "kavodax": 5,
-    "rippling": 3000,
+    "rippling": 15000,
     "university of toronto": 15000,
     "chargelab": 120,
     "linkedin": 15000,
@@ -7229,7 +7241,7 @@
     "earnin": 600,
     "docker": 3000,
     "turo": 600,
-    "workstream": 600,
+    "workstream": 25,
     "ethos life": 600,
     "withclutch": 600,
     "amplify education": 3000,
@@ -7552,7 +7564,7 @@
     "enkel": 5,
     "flux computing": 25,
     "harmattan ai": 25,
-    "draftkings": 3000,
+    "draftkings": 15000,
     "voter choice arizona": 5,
     "unite america": 25,
     "institute for citizens & scholars": 120,
@@ -7771,7 +7783,7 @@
     "skinny dipped almonds": 25,
     "the farmer's dog": 600,
     "poppi": 600,
-    "whoop": 3000,
+    "whoop": 600,
     "beekeeper's naturals": 120,
     "homebase": 3000,
     "lucidum": 25,
@@ -7830,7 +7842,7 @@
     "theoris services": 120,
     "healthsnap": 120,
     "threshold 360": 25,
-    "flex": 600,
+    "flex": 120,
     "quanthub": 25,
     "front finance": 120,
     "presence (application software)": 25,
@@ -7994,7 +8006,7 @@
     "partly": 120,
     "marloo": 5,
     "castelion": 120,
-    "radiant": 120,
+    "radiant": 600,
     "solopulse corp": 25,
     "gitlab": 3000,
     "shelf engine": 25,
@@ -8214,7 +8226,7 @@
     "stenon": 25,
     "aviso": 600,
     "lumos": 120,
-    "nearpod": 120,
+    "nearpod": 600,
     "bold penguin": 120,
     "central ohio transit authority": 600,
     "hyland": 3000,
@@ -8583,7 +8595,7 @@
     "influxdata": 120,
     "wetravel": 600,
     "vannevar labs": 600,
-    "philips": 15000,
+    "philips": 5,
     "deephealth": 600,
     "sanofi": 15000,
     "navihealth": 600,
@@ -8831,7 +8843,7 @@
     "upgrade": 3000,
     "coreweave": 3000,
     "anaplan": 3000,
-    "deel": 3000,
+    "deel": 15000,
     "silk": 120,
     "avantis team": 25,
     "nimble": 120,
@@ -8908,7 +8920,7 @@
     "skydio": 600,
     "ironscales": 120,
     "bitpanda": 600,
-    "paradigm": 25,
+    "paradigm": 120,
     "nowsecure": 120,
     "autopay": 120,
     "foretellix": 120,
@@ -9364,14 +9376,14 @@
     "sahha": 25,
     "aesyra": 25,
     "everside health": 600,
-    "sondermind": 600,
+    "sondermind": 3000,
     "novopayment": 600,
     "plume": 120,
     "skuvault": 25,
     "2ulaundry": 120,
     "salesloft": 3000,
     "wayflyer": 600,
-    "workit health": 600,
+    "workit health": 120,
     "storee": 25,
     "pockyt": 25,
     "hemster": 25,
@@ -17370,218 +17382,232 @@
     "comfi payments": 25,
     "vamp": 120,
     "greenslate": 600,
-    "faze clan": 25
+    "faze clan": 25,
+    "dehaze": 5,
+    "blok": 25,
+    "chef robotics": 120,
+    "averna therapeutics": 120,
+    "shamayim: jewish animal advocacy": 5,
+    "lucis": 5,
+    "green fusion": 120,
+    "caya": 25,
+    "govwell": 25,
+    "fireflies.ai": 120,
+    "eragon": 5,
+    "anyday": 25,
+    "firstwork": 5,
+    "kasisto": 25
   },
   "pending": {
     "edra": {
       "name": "Edra",
       "domain": "edra.ai",
       "first_seen": "2026-10-01",
-      "tries": 11,
-      "last_try": "2026-11-15"
+      "tries": 12,
+      "last_try": "2026-11-16"
     },
     "thresh consulting": {
       "name": "Thresh Consulting",
       "domain": "threshconsulting.com",
       "first_seen": "2026-10-01",
-      "tries": 8,
-      "last_try": "2026-11-15"
+      "tries": 9,
+      "last_try": "2026-11-16"
     },
     "masterpiece": {
       "name": "Masterpiece",
       "domain": "masterpiece.ai",
       "first_seen": "2026-10-01",
-      "tries": 9,
-      "last_try": "2026-11-15"
+      "tries": 10,
+      "last_try": "2026-11-16"
     },
     "happyrobot": {
       "name": "HappyRobot",
       "domain": "happyrobot.ai",
       "first_seen": "2026-10-01",
-      "tries": 10,
-      "last_try": "2026-11-15"
+      "tries": 11,
+      "last_try": "2026-11-16"
     },
     "on me gifting": {
       "name": "On Me Gifting",
       "domain": "onmegifting.com",
       "first_seen": "2026-10-01",
-      "tries": 9,
-      "last_try": "2026-11-15"
+      "tries": 10,
+      "last_try": "2026-11-16"
     },
     "landed": {
       "name": "Landed",
       "domain": "landed.ai",
       "first_seen": "2026-10-01",
-      "tries": 9,
-      "last_try": "2026-11-15"
+      "tries": 10,
+      "last_try": "2026-11-16"
     },
     "workwhile": {
       "name": "WorkWhile",
       "domain": "workwhile.com",
       "first_seen": "2026-10-01",
-      "tries": 8,
-      "last_try": "2026-11-15"
+      "tries": 9,
+      "last_try": "2026-11-16"
     },
     "vectorshift": {
       "name": "VectorShift",
       "domain": "vectorshift.ai",
       "first_seen": "2026-10-01",
-      "tries": 8,
-      "last_try": "2026-11-15"
+      "tries": 9,
+      "last_try": "2026-11-16"
     },
     "plaid": {
       "name": "Plaid",
       "domain": "plaid.com",
       "first_seen": "2026-10-01",
-      "tries": 9,
-      "last_try": "2026-11-15"
+      "tries": 10,
+      "last_try": "2026-11-16"
     },
     "wayco": {
       "name": "Wayco",
       "domain": "wayco.com",
       "first_seen": "2026-10-01",
-      "tries": 8,
-      "last_try": "2026-11-15"
+      "tries": 9,
+      "last_try": "2026-11-16"
     },
     "type": {
       "name": "Type",
       "domain": "",
       "first_seen": "2026-10-01",
-      "tries": 8,
-      "last_try": "2026-11-15"
+      "tries": 9,
+      "last_try": "2026-11-16"
     },
     "control seat": {
       "name": "Control Seat",
       "domain": "controlseat.com",
       "first_seen": "2026-10-01",
-      "tries": 11,
-      "last_try": "2026-11-15"
+      "tries": 12,
+      "last_try": "2026-11-16"
     },
     "realpact": {
       "name": "RealPact",
       "domain": "realpact.ai",
       "first_seen": "2026-10-01",
-      "tries": 9,
-      "last_try": "2026-11-15"
+      "tries": 10,
+      "last_try": "2026-11-16"
     },
     "metriport": {
       "name": "Metriport",
       "domain": "",
       "first_seen": "2026-10-01",
-      "tries": 9,
-      "last_try": "2026-11-15"
+      "tries": 10,
+      "last_try": "2026-11-16"
     },
     "civilgrid": {
       "name": "CivilGrid",
       "domain": "",
       "first_seen": "2026-10-01",
-      "tries": 11,
-      "last_try": "2026-11-15"
+      "tries": 12,
+      "last_try": "2026-11-16"
     },
     "infimaker": {
       "name": "InfiMaker",
       "domain": "",
       "first_seen": "2026-10-01",
-      "tries": 9,
-      "last_try": "2026-11-15"
+      "tries": 10,
+      "last_try": "2026-11-16"
     },
     "manchester's revnu": {
       "name": "Manchester's Revnu",
       "domain": "revnu.com",
       "first_seen": "2026-10-01",
-      "tries": 9,
-      "last_try": "2026-11-15"
+      "tries": 10,
+      "last_try": "2026-11-16"
     },
     "\u2018recruiting is next\u2019: metaview": {
       "name": "\u2018Recruiting is next\u2019: Metaview",
       "domain": "metaview.ai",
       "first_seen": "2026-10-01",
-      "tries": 8,
-      "last_try": "2026-11-15"
+      "tries": 9,
+      "last_try": "2026-11-16"
     },
     "preventive healthcare startup vytalyou": {
       "name": "Preventive Healthcare Startup Vytalyou",
       "domain": "vytalyou.com",
       "first_seen": "2026-10-01",
-      "tries": 9,
-      "last_try": "2026-11-15"
+      "tries": 10,
+      "last_try": "2026-11-16"
     },
     "exclusive | ai cyber startup armadin": {
       "name": "Exclusive | AI Cyber Startup Armadin",
       "domain": "",
       "first_seen": "2026-10-01",
-      "tries": 10,
-      "last_try": "2026-11-15"
+      "tries": 11,
+      "last_try": "2026-11-16"
     },
     "video ai startup synthesia": {
       "name": "Video AI Startup Synthesia",
       "domain": "",
       "first_seen": "2026-10-01",
-      "tries": 8,
-      "last_try": "2026-11-15"
+      "tries": 9,
+      "last_try": "2026-11-16"
     },
     "student-led dorm room fund": {
       "name": "Student-led Dorm Room Fund",
       "domain": "",
       "first_seen": "2026-10-01",
-      "tries": 8,
-      "last_try": "2026-11-15"
+      "tries": 9,
+      "last_try": "2026-11-16"
     },
     "hop aero": {
       "name": "Hop Aero",
       "domain": "",
       "first_seen": "2026-10-01",
-      "tries": 10,
-      "last_try": "2026-11-15"
+      "tries": 11,
+      "last_try": "2026-11-16"
     },
     "satlyt": {
       "name": "Satlyt",
       "domain": "",
       "first_seen": "2026-10-01",
-      "tries": 8,
-      "last_try": "2026-11-15"
+      "tries": 9,
+      "last_try": "2026-11-16"
     },
     "zaperon": {
       "name": "Zaperon",
       "domain": "",
       "first_seen": "2026-10-01",
-      "tries": 8,
-      "last_try": "2026-11-15"
+      "tries": 9,
+      "last_try": "2026-11-16"
     },
     "m-based": {
       "name": "M-Based",
       "domain": "",
       "first_seen": "2026-10-01",
-      "tries": 9,
-      "last_try": "2026-11-15"
+      "tries": 10,
+      "last_try": "2026-11-16"
     },
     "flowscope": {
       "name": "flowscope",
       "domain": "",
       "first_seen": "2026-10-01",
-      "tries": 10,
-      "last_try": "2026-11-15"
+      "tries": 11,
+      "last_try": "2026-11-16"
     },
     "metaview": {
       "name": "Metaview",
       "domain": "",
       "first_seen": "2026-10-01",
-      "tries": 9,
-      "last_try": "2026-11-15"
+      "tries": 10,
+      "last_try": "2026-11-16"
     },
     "inbolt": {
       "name": "Inbolt",
       "domain": "",
       "first_seen": "2026-10-01",
-      "tries": 10,
-      "last_try": "2026-11-15"
+      "tries": 11,
+      "last_try": "2026-11-16"
     },
     "doss": {
       "name": "DOSS",
       "domain": "doss.com",
       "first_seen": "2026-10-02",
-      "tries": 8,
-      "last_try": "2026-11-15"
+      "tries": 9,
+      "last_try": "2026-11-16"
     },
     "withcoverage": {
       "name": "WithCoverage",
@@ -17593,43 +17619,43 @@
       "name": "Prosper",
       "domain": "prosper.com",
       "first_seen": "2026-10-02",
-      "tries": 5,
-      "last_try": "2026-11-15"
+      "tries": 6,
+      "last_try": "2026-11-16"
     },
     "bastion": {
       "name": "Bastion",
       "domain": "bastion.ai",
       "first_seen": "2026-10-02",
-      "tries": 8,
-      "last_try": "2026-11-15"
+      "tries": 9,
+      "last_try": "2026-11-16"
     },
     "halluminate": {
       "name": "Halluminate",
       "domain": "halluminate.ai",
       "first_seen": "2026-10-02",
-      "tries": 7,
-      "last_try": "2026-11-15"
+      "tries": 8,
+      "last_try": "2026-11-16"
     },
     "offensive security startup armadin": {
       "name": "Offensive Security Startup Armadin",
       "domain": "armadin.com",
       "first_seen": "2026-10-02",
-      "tries": 7,
-      "last_try": "2026-11-15"
+      "tries": 8,
+      "last_try": "2026-11-16"
     },
     "global payments infra startup walapay": {
       "name": "Global payments infra startup Walapay",
       "domain": "walapay.io",
       "first_seen": "2026-10-02",
-      "tries": 7,
-      "last_try": "2026-11-15"
+      "tries": 8,
+      "last_try": "2026-11-16"
     },
     "photon": {
       "name": "Photon",
       "domain": "photon.dev",
       "first_seen": "2026-10-02",
-      "tries": 7,
-      "last_try": "2026-11-15"
+      "tries": 8,
+      "last_try": "2026-11-16"
     },
     "unveilr ai": {
       "name": "Unveilr AI",
@@ -17641,29 +17667,29 @@
       "name": "Good Tape",
       "domain": "",
       "first_seen": "2026-10-02",
-      "tries": 7,
-      "last_try": "2026-11-15"
+      "tries": 8,
+      "last_try": "2026-11-16"
     },
     "palebluedot ai": {
       "name": "PaleBlueDot AI",
       "domain": "",
       "first_seen": "2026-10-02",
-      "tries": 7,
-      "last_try": "2026-11-15"
+      "tries": 8,
+      "last_try": "2026-11-16"
     },
     "kevin mandia's new 'agent swarm' security startup armadin": {
       "name": "Kevin Mandia's new 'agent swarm' security startup Armadin",
       "domain": "",
       "first_seen": "2026-10-02",
-      "tries": 7,
-      "last_try": "2026-11-15"
+      "tries": 8,
+      "last_try": "2026-11-16"
     },
     "nine-person halluminate": {
       "name": "Nine-person Halluminate",
       "domain": "",
       "first_seen": "2026-10-02",
-      "tries": 7,
-      "last_try": "2026-11-15"
+      "tries": 8,
+      "last_try": "2026-11-16"
     },
     "flexpoint": {
       "name": "FlexPoint",
@@ -21791,6 +21817,42 @@
       "name": "Insurtech StitchStudio",
       "domain": "",
       "first_seen": "2026-11-15",
+      "tries": 1
+    },
+    "bevado": {
+      "name": "Bevado",
+      "domain": "",
+      "first_seen": "2026-11-16",
+      "tries": 1
+    },
+    "cardiovascular imaging startup raywatt": {
+      "name": "Cardiovascular Imaging Startup Raywatt",
+      "domain": "",
+      "first_seen": "2026-11-16",
+      "tries": 1
+    },
+    "former freshworks executives raise $53 million for ai-native": {
+      "name": "Former Freshworks executives raise $53 million for AI-native",
+      "domain": "",
+      "first_seen": "2026-11-16",
+      "tries": 1
+    },
+    "ai startup numa": {
+      "name": "AI startup Numa",
+      "domain": "",
+      "first_seen": "2026-11-16",
+      "tries": 1
+    },
+    "bharat semi": {
+      "name": "Bharat Semi",
+      "domain": "",
+      "first_seen": "2026-11-16",
+      "tries": 1
+    },
+    "freshworks alums raise $53m to take on salesforce, hubspot w": {
+      "name": "Freshworks alums raise $53M to take on Salesforce, HubSpot w",
+      "domain": "",
+      "first_seen": "2026-11-16",
       "tries": 1
     }
   },
@@ -27826,6 +27888,50 @@
       "date": "2026-11-14",
       "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxObzZjU3E0WXFtUXhUVTNFU0s4WjE3VXczNmxYdXBfUi1SR3JZNjNzX2VyZVVkV2NpNnB1MmRJUkRmN0FHbTNaOGR5bDRzY2pRSDhIV1Q3U0VXRHFPNHgzTW5UR3lGMm5IbzFOLTFsY1dQQVZfcnFVNWU2bVpiYmlwQVRJdnNBMlVqT2NfMzRuZHg?oc=5",
       "tokens": []
+    },
+    "bevado": {
+      "name": "Bevado",
+      "round": "Seed",
+      "amount": "$10M",
+      "date": "2026-11-16",
+      "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxPLUJZOFhXNHowQnkzS2pPT0ZsUFYxbGpWQmEtc2JZN09IODRjUGtVTHBfNkEzYTdoM00yWUV3cGM1Q0JkV1YxenRrTE9BZW5MVkFaUEZWbExhU3hHSEpmZDluWjhMVkZSVzdJNFhENXlHRjFCWmVfX2N1Q1JhdmNBYklXUmpQcDBUeXF6RWVtUWE5NTI5M1BteXEzQ0VCUjVwVWs5ZzYtNWZ1MXktMWlKRVU1MDNNbkx3cThoWlF5WGdUS013QkYyaw?oc=5",
+      "tokens": []
+    },
+    "cardiovascular imaging startup raywatt": {
+      "name": "Cardiovascular Imaging Startup Raywatt",
+      "round": "Series B",
+      "date": "2026-11-16",
+      "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTFAtbDFKM2pKTnJIZlg0Y1EwQ2REdk4yZVpDdi1JZS04ZFZkYWdiNHo3dGZZSVBqcmtvLVFvRHpULTZIZUxHOVp6UEtiNW5KQlBfRnhn?oc=5",
+      "tokens": []
+    },
+    "former freshworks executives raise $53 million for ai-native": {
+      "name": "Former Freshworks executives raise $53 million for AI-native",
+      "amount": "$53M",
+      "date": "2026-11-16",
+      "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPTkRubzB4VEVGTmxEdTg3SDZrNEdGc0lTOENnT0I5QlhuVjJIY21kLXhpMTNZbThWMDBJTEdfMENJeXVWc25ha1QwQnozWFhLSkRKMG56U21XRUF4OGF4ZS1jMlJ5VG5tQmZKenowOVJYRlhUZjNtd0NFcjMwaC1MUlNrWklOVDBCcUpSNTYxbERYeHJIZGktdlA5T3dIdHRMYWc?oc=5",
+      "tokens": []
+    },
+    "ai startup numa": {
+      "name": "AI startup Numa",
+      "amount": "$45M",
+      "date": "2026-11-16",
+      "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxOVlJ3NXVBM3dkMnZYQjVpbU4zMGtlMjVzZmdmcmpLYVVwRWRtYUNxQ1JHaUhxeS1uSXJUZks2Y0xFSDMxM2dORUlzcDNTMWY4SHdsNlZMeU5uT3AtVHZnNl9OT3JGX0ZxSU9feHhIQmlWbEI3T01WQURzRi1tdWpjbmdESTl4V3hsb3hPVg?oc=5",
+      "tokens": []
+    },
+    "bharat semi": {
+      "name": "Bharat Semi",
+      "round": "Seed",
+      "amount": "$24M",
+      "date": "2026-11-16",
+      "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxNOW1MMEZVX0l6Nm05VmhVQXgxU2YwSXY0MHRXN21icVpRNW9pSlU4c2Z4akJQX0ZjRWhLcm82OWw5Ynd3RnBnbF9pX2Q3cGN1Yl9pc28yNjJsRHpBRjdiTXNCSmVuWm80LURYTDRTc1o4Q1FRbWFLaWhQMkl0T1lCamdJSE5lZmt4QW9TRDRfUVpMYy1CdXhCT1pkMklpQ2xNdEM4NFdRanQ3bmxJZG5vM2U2eFV5MDdyLTE3dEd3Z19rUU5HUmplSV91Wkk4UW_SAdQBQVVfeXFMTWV3QTlLY19mOERxN3AtSkJJeEo0dnRoZDg5NXBpVENMcU8zSHgzS1llSllNR2M5Y2owaU9Ca3JCM0tiZXJDeUZSeU9MU2pILXFEUl9ubGFkYjk4N2dDUEt4UDFzVWh3QUg1RXdzYTFoR3htbGM5clJvY2tacUNzZlEyZGdxU2ZKcmVwTHdod2E0OUl2RW42UkhLVDlzOHo0dHZvZ0FVdGVfa0kwZVg5NnJ4RU9JdGRpalRrWFc1dVF0RVFScFg0SHRBYThfaUJHWXJiOFk?oc=5",
+      "tokens": []
+    },
+    "freshworks alums raise $53m to take on salesforce, hubspot w": {
+      "name": "Freshworks alums raise $53M to take on Salesforce, HubSpot w",
+      "amount": "$53M",
+      "date": "2026-11-16",
+      "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxQdHNUX1ItSjhuR0cxcTBlYnBHOENrTnI2dEhkX01HVGFYSDhYVHFfT0l6WVJmeTJjQXFyaXNUeFlmajFNekRuV2l4cllnWWJ3eG01LTZXWHdIdU5EMkQ5OXJ3Rzd6ZS1aenhYMDZsaHg4WXdYRWtNTy02MVlxQTRsb2VTM1c5ZmRhTXp1NVppWGJSSXUtaWp2SnlSX0t0c1YtZ0dvZTdSeERRdGNiLWNj?oc=5",
+      "tokens": []
     }
   },
   "stage": {
@@ -31191,6 +31297,27 @@
       "tokens": [
         "orakloncology"
       ]
+    },
+    "bevado": {
+      "name": "Bevado",
+      "round": "Seed",
+      "date": "2026-11-16",
+      "source": "funding digest",
+      "tokens": []
+    },
+    "cardiovascular imaging startup raywatt": {
+      "name": "Cardiovascular Imaging Startup Raywatt",
+      "round": "Series B",
+      "date": "2026-11-16",
+      "source": "funding digest",
+      "tokens": []
+    },
+    "bharat semi": {
+      "name": "Bharat Semi",
+      "round": "Seed",
+      "date": "2026-11-16",
+      "source": "funding digest",
+      "tokens": []
     }
   }
 }
