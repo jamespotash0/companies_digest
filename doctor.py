@@ -87,13 +87,12 @@ def local_checks():
             check(OK, "LLM provider", llm.describe())
         else:
             check(WARN, "no LLM provider",
-                  "AI company summaries and discover.py are off",
+                  "discover.py is off",
                   "set ANTHROPIC_API_KEY or OPENAI_API_KEY in .env")
     except Exception as e:
         check(WARN, "could not check LLM provider", str(e)[:60])
 
-    for key, what in (("HUNTER_API_KEY", "verified founder emails"),
-                      ("ADZUNA_APP_ID", "Adzuna job source"),
+    for key, what in (("ADZUNA_APP_ID", "Adzuna job source"),
                       ("GROK_API_KEY", "X/Grok hiring posts")):
         alt = {"GROK_API_KEY": "XAI_API_KEY"}.get(key)
         have = key in env or (alt and alt in env) or os.environ.get(key)
@@ -190,12 +189,11 @@ def github_checks():
             "scheduled runs use the repo author's filters, NOT your profile.json",
     }
     if not ({"ANTHROPIC_API_KEY", "OPENAI_API_KEY"} & have):
-        check(WARN, "no LLM secret", "no AI summaries, discover.py disabled",
+        check(WARN, "no LLM secret", "discover.py disabled",
               "gh secret set ANTHROPIC_API_KEY   # or OPENAI_API_KEY")
     optional = {
-        "ANTHROPIC_API_KEY": "no AI summaries, discover.py disabled",
+        "ANTHROPIC_API_KEY": "discover.py disabled",
         "OPENAI_API_KEY": "alternative to ANTHROPIC_API_KEY",
-        "HUNTER_API_KEY": "contact emails stay pattern-guessed",
         "ADZUNA_APP_ID": "Adzuna source off", "ADZUNA_APP_KEY": "Adzuna source off",
         "GROK_API_KEY": "X/Grok source off",
     }

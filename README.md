@@ -37,6 +37,11 @@ watchlist automatically:
 FUNDED_COMPANIES_URL=https://raw.githubusercontent.com/<you>/startup_digest/state/funded_companies.json
 ```
 
+In Actions, set it as a repository **variable**, not a secret (Settings →
+Secrets and variables → Actions → Variables); the workflow reads
+`vars.FUNDED_COMPANIES_URL`. Point it at your own fork of `startup_digest`, or
+at anyone's public one — the list is the same raises either way.
+
 Public repos, so it's a plain GET — no token. Unset or unreachable and the
 digest runs on its own sources: a smaller digest, not a broken one. The hand-off
 is a day behind by design — a raise found at 8am reaches this digest the next
@@ -52,7 +57,7 @@ else is optional.
 ### 1. Fork and install
 
 ```bash
-git clone <your-fork> && cd claude_job_automation
+git clone <your-fork> && cd companies_digest
 python3 -m venv .venv
 .venv/bin/python -m pip install -r requirements.txt   # one dependency: feedparser
 ```
@@ -70,8 +75,7 @@ cp .env.example .env      # then edit it
 | `EMAIL_USER` | yes | Gmail address that sends the digests |
 | `EMAIL_PASS` | yes | Gmail **app password** (Google Account → Security → 2-Step Verification → App passwords), not your login password |
 | `EMAIL_TO` | yes | Where digests go; can equal `EMAIL_USER`, or a comma-separated list |
-| `ANTHROPIC_API_KEY` **or** `OPENAI_API_KEY` | optional | AI company summaries + `discover.py`. Either provider works — both have server-side web search, and `llm.py` picks whichever key is set. Set `LLM_PROVIDER` only if you have both. |
-| `HUNTER_API_KEY` | optional | Verified founder emails. From hunter.io (free tier ~50/mo) |
+| `ANTHROPIC_API_KEY` **or** `OPENAI_API_KEY` | optional | `discover.py` (web-searches for hiring companies) and `setup_profile.py`. Either provider works — both have server-side web search, and `llm.py` picks whichever key is set. Set `LLM_PROVIDER` only if you have both. |
 | `ADZUNA_APP_ID` / `ADZUNA_APP_KEY` | optional | Extra job aggregator. Free from developer.adzuna.com |
 | `GROK_API_KEY` (or `XAI_API_KEY`) | optional | Founder "we're hiring" posts on X. From console.x.ai |
 
@@ -93,9 +97,6 @@ fill in five fields:
   "company_size": "small"                   // small | large | any
 }
 ```
-
-Then compile it once (needs `ANTHROPIC_API_KEY`; your resume is sent only to the
-Anthropic API, never committed):
 
 Two more worth setting, because they do most of the ranking:
 
@@ -146,7 +147,7 @@ thirty, a compiled profile older than your resume means last month's filters.
 
 ### 6. Put it on a schedule
 
-Push your fork and enable Actions. Three workflows ship with it:
+Push your fork and enable Actions. Two workflows ship with it:
 
 | Workflow | Schedule | Runs |
 |---|---|---|
@@ -159,8 +160,7 @@ entire contents of your local `profile.compiled.json`. Without it the scheduled
 runs fall back to the generic keywords baked into the scripts, and you get a
 digest tuned to someone else's job hunt.
 
-State (`ats_watchlist.json`, `seen_jobs.json`, `enrich_cache.json`,
-`hunter_usage.json`, `getro_networks.json`, `funded_companies.json`) persists on a `state` branch between
+State (`ats_watchlist.json`, `seen_jobs.json`, `getro_networks.json`) persists on a `state` branch between
 runs, so the watchlist grows and you're never emailed the same posting twice.
 
 Trigger a run by hand from the **Actions** tab → pick a workflow → **Run
@@ -308,8 +308,7 @@ Add tokens to `GREENHOUSE_COMPANIES` / `LEVER_COMPANIES` / `ASHBY_COMPANIES` in
 State files, all JSON on disk and on the `state` branch in CI:
 `ats_watchlist.json` (companies + ATS tokens + funded/stage facts),
 `seen_jobs.json` (already-emailed postings, `JOB_SEEN_TTL_DAYS`),
-`enrich_cache.json` (per-company research, versioned by `SCHEMA_VERSION`),
-`hunter_usage.json` (monthly quota counter), `getro_networks.json` (known
+`getro_networks.json` (known
 network ids so a sweep doesn't re-probe dead ones).
 
 ### Conventions
@@ -329,8 +328,8 @@ network ids so a sweep doesn't re-probe dead ones).
 - **Show the arithmetic.** Scores carry a `parts` breakdown that the email
   prints. If a change makes the parts stop summing to the total, the email is
   lying — there's a test for exactly that.
-- **Gates before spend.** Anything that costs an API call (enrichment, Hunter,
-  discovery) runs after the free filters, and caches its result.
+- **Gates before spend.** Anything that costs an API call (discovery, X/Grok)
+  runs after the free filters, and caches its result.
 
 ### Tests
 
@@ -387,11 +386,6 @@ Two paid APIs, both optional, both yours to sign up for:
 |---|---|---|
 | `ANTHROPIC_API_KEY` **or** `OPENAI_API_KEY` | console.anthropic.com / platform.openai.com | Only `discover.py` uses it here — two web-search sweeps per run, a few cents. Unset and that one source turns off; every job board still works. |
 | `GROK_API_KEY` | console.x.ai | ~$0.005 per X search — cents per month. |
-
-`HUNTER_API_KEY` (hunter.io) has a free tier of ~50 lookups/month; the script
-rations against `hunter_usage.json` and falls back to pattern-guessed emails
-(marked UNVERIFIED) once the cap is hit, so it will not silently start charging
-you.
 
 Everything else — the job boards, The Muse, Adzuna, Getro, Google News, SMTP —
 is free or keyless.
