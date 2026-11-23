@@ -66,9 +66,6 @@ jobs:
               && git show "origin/state:$f" > "$f" && echo "restored $f" || true
           done
 
-      - name: Install deps
-        run: pip install -r requirements.txt
-
       # Bulk-feed the watchlist from the public Getro API (the portfolio job
       # boards of hundreds of VC funds). Keyless; non-fatal.
       - name: Sweep VC job boards (Getro)

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """A ~60-line test runner, so the harness itself needs nothing beyond the stdlib.
 
-The repo's whole install is `pip install feedparser`; adding pytest to run forty
-assertions would triple that for no benefit. Usage:
+The repo has no dependencies at all; adding pytest to run forty assertions
+would be the first, for no benefit. Usage:
 
     python tests/run.py            # everything
     python tests/run.py gates      # just the files matching "gates"

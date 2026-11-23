@@ -56,13 +56,6 @@ def _env_file():
 
 def local_checks():
     print("\nLocal runs")
-    try:
-        import feedparser  # noqa: F401
-        check(OK, "dependencies installed")
-    except ImportError:
-        check(FAIL, "dependencies missing", "feedparser not importable",
-              "pip install -r requirements.txt")
-
     env = _env_file()
     if env is None:
         check(WARN, ".env missing", "digests will print to stdout instead of sending",

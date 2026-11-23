@@ -20,13 +20,6 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      # The test harness itself is stdlib-only, but the modules under test are
-      # not: funding_digest imports feedparser at module scope, so importing it
-      # to test its gates needs the real dependency. Cheap - requirements.txt is
-      # one line - and it keeps CI honest about what the code actually needs.
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-
       # No network, no API keys, no fixtures fetched at runtime. ~1 second.
       - name: Run tests
         run: python tests/run.py

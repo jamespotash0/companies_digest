@@ -54,12 +54,11 @@ morning.
 You need a Gmail address (or any SMTP account) and about ten minutes. Everything
 else is optional.
 
-### 1. Fork and install
+### 1. Fork it
 
 ```bash
 git clone <your-fork> && cd companies_digest
-python3 -m venv .venv
-.venv/bin/python -m pip install -r requirements.txt   # one dependency: feedparser
+# Nothing to install: standard library only, Python 3.11+
 ```
 
 ### 2. Set your secrets
@@ -109,8 +108,8 @@ Then compile it once (needs `ANTHROPIC_API_KEY`; your resume is sent only to the
 Anthropic API, never committed):
 
 ```bash
-.venv/bin/python setup_profile.py
-.venv/bin/python tests/check_profile.py    # <- do not skip this
+python3 setup_profile.py
+python3 tests/check_profile.py    # <- do not skip this
 ```
 
 `setup_profile.py` writes `profile.compiled.json` — the title / skill / domain /
@@ -128,8 +127,8 @@ the repo author's job search rather than yours. They say so on startup.
 ### 4. Check it before you run it
 
 ```bash
-.venv/bin/python doctor.py           # local + GitHub checks
-.venv/bin/python doctor.py --local   # skip the GitHub half
+python3 doctor.py           # local + GitHub checks
+python3 doctor.py --local   # skip the GitHub half
 ```
 
 Every problem it looks for is **silent** — nothing errors, you just get wrong
@@ -141,8 +140,8 @@ thirty, a compiled profile older than your resume means last month's filters.
 ### 5. Run it
 
 ```bash
-.venv/bin/python companies_digest.py   # what they and 400 other boards posted
-.venv/bin/python getro.py              # bulk-fill the watchlist (run this first, once)
+python3 companies_digest.py   # what they and 400 other boards posted
+python3 getro.py              # bulk-fill the watchlist (run this first, once)
 ```
 
 ### 6. Put it on a schedule
@@ -313,8 +312,8 @@ network ids so a sweep doesn't re-probe dead ones).
 
 ### Conventions
 
-- **Stdlib plus `feedparser`.** That's the whole dependency list, including the
-  test runner. Don't add one without a strong reason.
+- **Standard library only.** No dependencies at all, including the test
+  runner. Don't add one without a strong reason.
 - **Config reads the environment first.** Every knob is `env_int` / `env_flag` /
   `env_list` with the default inline, and every one is documented in
   `.env.example`. A new tunable that isn't in that file is invisible to forkers.
