@@ -214,3 +214,35 @@ def test_board_hq_corroboration_needs_a_majority():
 
 if __name__ == "__main__":
     main("enrich")
+
+
+@case
+def test_a_failed_lookup_is_retried_but_not_forever():
+    """ai_lookup returns None when the CALL failed and {} when it researched and
+    found nothing. Conflating them cached a well-formed record of empty strings,
+    so one transient 401 meant the company was never researched again and both
+    gates failed open for it permanently."""
+    import tempfile
+    real_lookup, real_email = E.ai_lookup, E.find_email
+    cwd = os.getcwd()
+    try:
+        os.chdir(tempfile.mkdtemp())
+        E.find_email = lambda d, f: ("", "", [])
+        E.ai_lookup = lambda c: None                       # the call errors
+        seen = []
+        for _ in range(E.LOOKUP_MAX_ATTEMPTS + 1):
+            seen.append(E.enrich("Flaky Co").get("retry"))
+        check(seen[0] is True, "a first failure should be retried")
+        check(seen[-1] is False,
+              f"gave up never — a dead company would cost a call every run: {seen}")
+        equal(sum(1 for s in seen if s), E.LOOKUP_MAX_ATTEMPTS - 1)
+
+        # ...but "asked, genuinely nothing there" is cached the first time.
+        calls = []
+        E.ai_lookup = lambda c: calls.append(c) or {}
+        E.enrich("Obscure Co")
+        E.enrich("Obscure Co")
+        equal(len(calls), 1, "a no-data answer should not be looked up twice")
+    finally:
+        E.ai_lookup, E.find_email = real_lookup, real_email
+        os.chdir(cwd)

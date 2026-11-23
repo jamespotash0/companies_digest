@@ -140,8 +140,11 @@ def ai_lookup(company):
         return _parse_json(_llm.research(prompt, max_tokens=700, max_uses=3,
                                          timeout=60))
     except Exception as e:
+        # None, not {} — the caller has to tell a transport failure (retry) from
+        # a genuine "researched it, found nothing" ({}, cache it and move on).
+        # Conflating them is what let one 401 poison a company permanently.
         print(f"[warn] ai_lookup {company}: {e}")
-        return {}
+        return None
 
 
 def _parse_json(text):
@@ -262,15 +265,22 @@ def find_email(domain, founders):
 # --------------------------------------------------------------------------
 # public entry point
 # --------------------------------------------------------------------------
+# How many times a company whose lookup ERRORED gets retried on later runs
+# before we stop paying to try. A genuine "nothing found" is cached first time.
+LOOKUP_MAX_ATTEMPTS = int(os.environ.get("ENRICH_MAX_ATTEMPTS", "3"))
+
+
 def enrich(company):
     """Full enrichment for one company, cached. Returns a dict."""
     cache = _load(ENRICH_CACHE, {})
     key = company.lower().strip()
     hit = cache.get(key)
-    if hit and hit.get("v") == SCHEMA_VERSION:
+    if hit and hit.get("v") == SCHEMA_VERSION and not hit.get("retry"):
         return hit
 
     info = ai_lookup(company)
+    failed = info is None
+    info = info or {}
     domain = info.get("domain") or ""
     email, status, alts = ("", "", [])
     if domain:
@@ -295,6 +305,16 @@ def enrich(company):
         "email_alts": alts,
         "ts": datetime.now().timestamp(),
     }
+    if failed:
+        # The call errored. Record the attempt so this is retried on the next
+        # run, but give up after LOOKUP_MAX_ATTEMPTS so a company that is
+        # permanently unresolvable stops costing a call every single day.
+        attempts = (hit or {}).get("attempts", 0) + 1
+        result["attempts"] = attempts
+        result["retry"] = attempts < LOOKUP_MAX_ATTEMPTS
+        print(f"[enrich] {company}: lookup failed "
+              f"({attempts}/{LOOKUP_MAX_ATTEMPTS})"
+              + (", will retry next run" if result["retry"] else ", giving up"))
     cache[key] = result
     _save(ENRICH_CACHE, cache)
     return result
