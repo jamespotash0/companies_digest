@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """
 setup_profile.py — turn your resume + plain-English preferences into the keyword
-filters both digests use.
+filters the companies digest uses.
 
 Reads profile.json (see profile.example.json), sends your resume + your
 `roles` / `startup_types` sentences to Claude, and writes profile.compiled.json:
-  { target_titles, skills, domains, focus_keywords, years,
+  { target_titles, skills, domains, years,
     location_keywords, remote_ok, prefer_larger }
 
-companies_digest.py and funding_digest.py load that file automatically if present, so
+companies_digest.py loads that file automatically if present, so
 you configure everything here without editing any code. Re-run whenever you
 change profile.json or your resume.
 
@@ -94,7 +94,6 @@ def compile_profile(profile):
         "job description (e.g. \"sql\",\"figma\",\"roadmap\",\"discovery\").\n"
         '  "domains": 10-20 industry/domain keywords they have exposure to or want '
         "(e.g. \"ai\",\"fintech\",\"proptech\",\"b2b\").\n"
-        '  "focus_keywords": 8-15 keywords to filter FUNDING news to the company types they want.\n'
         '  "years": integer approximate years of professional experience.\n\n'
         f"Roles wanted: {profile.get('roles','')}\n"
         f"Company / startup types wanted: {profile.get('startup_types','')}\n"
@@ -128,7 +127,6 @@ def compile_profile(profile):
         "target_titles": [t.lower() for t in ai.get("target_titles", [])],
         "skills": [s.lower() for s in ai.get("skills", [])],
         "domains": [d.lower() for d in ai.get("domains", [])],
-        "focus_keywords": [k.lower() for k in ai.get("focus_keywords", [])],
         "years": int(profile.get("years_experience") or ai.get("years") or 3),
         "location_keywords": [l.lower() for l in profile.get("locations", [])],
         "remote_ok": bool(profile.get("remote_ok", False)),
@@ -187,14 +185,14 @@ def main():
 
     print(f"[ok] wrote {OUT_FILE}")
     print(f"     titles={len(compiled['target_titles'])}  skills={len(compiled['skills'])}"
-          f"  domains={len(compiled['domains'])}  focus={len(compiled['focus_keywords'])}")
+          f"  domains={len(compiled['domains'])}")
     print(f"     locations={compiled['location_keywords']}  remote_ok={compiled['remote_ok']}"
           f"  prefer_larger={compiled['prefer_larger']}  max_age_days={compiled['max_age_days']}"
           + (f"  max_years={compiled['max_years']}" if "max_years" in compiled else ""))
     # NOT "commit it": profile.compiled.json is gitignored on purpose, because
     # this repo is public and the file is derived from your resume. Scheduled
     # runs read it from a secret instead.
-    print("     Both digests load this automatically on your machine.")
+    print("     companies_digest.py loads this automatically on your machine.")
     print("     Next:  python tests/check_profile.py"
           "        # confirm the compiled filters still catch real postings")
     print("            gh secret set PROFILE_COMPILED_JSON < profile.compiled.json"

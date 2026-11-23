@@ -287,7 +287,7 @@ MAX_YEARS = 5
 # can configure everything from profile.json + their resume without editing code.
 # Absent = the defaults above apply. Those defaults are the repo author's own
 # job search, so a fork that skips setup_profile.py gets somebody else's
-# filters — which is why both digests say so loudly at startup.
+# filters — which is why the digest says so loudly at startup.
 # ==========================================================================
 # Tests must exercise the CODE, not whatever profile happens to be on this
 # machine. Without this the suite passes locally against a personal profile and

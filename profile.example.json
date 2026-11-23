@@ -18,11 +18,11 @@
     "locations": "A role's location must contain one of these (lowercased) to pass the filter. Use [] for no location filter (any location).",
     "remote_ok": "true also keeps roles whose location says 'remote'.",
     "roles": "Plain English. Claude turns this + your resume into the title/seniority filters.",
-    "startup_types": "Plain English. Becomes the domain filter (jobs) and funding focus keywords.",
+    "startup_types": "Plain English. Becomes the domain filter for postings.",
     "company_size": "'small' = early-stage rank first, 'large' = bigger first, 'any' = neutral.",
     "years_experience": "Your years of experience. Compared against whatever bar a posting states.",
     "max_age_days": "Companies digest only: drop postings older than this many days (by the board's own posted date) and rank fresher ones higher. Set 0 to disable age filtering.",
-    "_usage": "Fill this file in, then run:  python setup_profile.py  -> writes profile.compiled.json. Then run:  python tests/check_profile.py  to confirm the compiled filters still classify 34 real postings correctly (the compiled list is written by a model and does drift). Both digests load the compiled file automatically. Re-run whenever you edit this file or your resume.",
+    "_usage": "Fill this file in, then run:  python setup_profile.py  -> writes profile.compiled.json. Then run:  python tests/check_profile.py  to confirm the compiled filters still classify 34 real postings correctly (the compiled list is written by a model and does drift). companies_digest.py loads the compiled file automatically. Re-run whenever you edit this file or your resume.",
     "max_years": "Hard ceiling on the experience bar a posting may ask for; it is filtered out above this. Postings that state NO bar always pass. 0 disables."
   }
 }

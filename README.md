@@ -114,7 +114,7 @@ Anthropic API, never committed):
 ```
 
 `setup_profile.py` writes `profile.compiled.json` — the title / skill / domain /
-location filters both digests load at startup. A model writes that list from your
+location filters companies_digest.py loads at startup. A model writes that list from your
 one-sentence `roles`, so it can miss a stem you needed. `check_profile.py` runs
 the compiled filters over 34 hand-labelled real postings and names anything they
 now misclassify; widen `roles` and re-compile if it flags something.

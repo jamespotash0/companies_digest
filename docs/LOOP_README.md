@@ -15,7 +15,7 @@ So: **company raises in the morning → its open roles show up ranked in your
 afternoon companies digest.** You never copy an ATS token by hand.
 
 ## Files added
-- `watchlist.py` — detection + shared-file logic (imported by both digests).
+- `watchlist.py` — detection + shared-file logic (imported by the companies digest, discover.py and getro.py).
 - `ats_watchlist.json` — the shared file (auto-created, travels via cache).
 
 ## How the file moves between the two workflows
