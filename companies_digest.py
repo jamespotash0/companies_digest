@@ -1222,9 +1222,20 @@ def _fold_punct(text):
     return re.sub(r"\s+", " ", re.sub(r"[-/\u2010-\u2015]+", " ", t)).strip()
 
 
+def _reads_senior(t):
+    """Seniority check on a folded title, ignoring any target stem it contains:
+    a stem you asked for ("lead product manager", "chief of staff") can't veto
+    itself, but "Senior Lead Product Manager" still has "senior" left over."""
+    # Longest first, or "product manager" eats the middle of "lead product
+    # manager" and strands the "lead".
+    for x in sorted(RESUME["target_titles"], key=len, reverse=True):
+        t = t.replace(_fold_punct(x), " ")
+    return any(x in t for x in SENIORITY_EXCLUDE) or bool(_LEAD_RE.search(t))
+
+
 def title_is_target(title):
     t = _fold_punct(_norm(title))
-    if any(x in t for x in SENIORITY_EXCLUDE) or _LEAD_RE.search(t):
+    if _reads_senior(t):
         return False
     if any(x in t for x in SWE_EXCLUDE):      # no software-engineering roles
         return False
@@ -1344,6 +1355,7 @@ def screen_facts(content):
 # "SAAS"; blanket sentence-case turned "ai" into "Ai". Neither is how anyone
 # writes them, and the digest prints these terms verbatim.
 _TERM_CASE = {
+    "apis": "APIs", "llms": "LLMs", "prds": "PRDs", "kpis": "KPIs",
     "saas": "SaaS", "paas": "PaaS", "iaas": "IaaS", "devops": "DevOps",
     "github": "GitHub", "postgres": "Postgres", "typescript": "TypeScript",
     "javascript": "JavaScript", "nodejs": "Node.js", "figma": "Figma",
@@ -1821,7 +1833,7 @@ def score_breakdown(title, content, tier=None, work_mode=None):
 def _seniority_from_prose(title, content):
     jr = [x for x in JUNIOR_SIGNALS if x in content]
     sr = [x for x in SENIOR_SIGNALS if x in content]
-    senior_title = any(x in title for x in SENIORITY_EXCLUDE) or _LEAD_RE.search(title)
+    senior_title = _reads_senior(_fold_punct(title))
     if senior_title:
         return 0.30, "the title itself reads senior"
     if jr and not sr:
@@ -2258,10 +2270,6 @@ def card(item, dim=False):
         # have to move" verdict, and colouring both said it twice.
         chips.append(_chip(esc(mode)))
 
-    if facts.get("comp"):
-        chips.append(_chip(esc(facts["comp"])))
-    if facts.get("equity"):
-        chips.append(_chip(esc(facts["equity"])))
     if facts.get("sponsorship"):
         chips.append(_chip(esc(facts["sponsorship"]),
                            "bad" if facts["sponsorship"].startswith("No") else "good"))
@@ -2270,10 +2278,6 @@ def card(item, dim=False):
     if sz:
         chips.append(_chip(f"~{sz} people", "good" if sz <= 200 else "neutral"))
 
-    age = age_label(item.get("posted_ts"))
-    if age:
-        fresh = age in ("today", "1d ago")
-        chips.append(_chip(age, "good" if fresh else "neutral", bold=fresh))
 
     # 🚀 marks a posting at a company the funding digest saw raise recently — the
     # reason the req exists, and the best cold-outreach hook you get.
@@ -2282,7 +2286,6 @@ def card(item, dim=False):
                            "good", bold=True))
     elif item.get("round"):
         chips.append(_chip(esc(item["round"])))
-    chips.append(_chip(esc(item.get("source", ""))))
 
     facts_row = ""
     fit = fit_sentence(item)
@@ -2290,6 +2293,29 @@ def card(item, dim=False):
                f"line-height:20px;color:{INK}\">{fit}</div>") if fit else ""
 
     comp = esc(pretty_company(item.get("company"))) or "\u2014"
+    # Pay sits with the company name, where you look first, not in the chip row.
+    pay = " + ".join(esc(facts[k]) for k in ("comp", "equity") if facts.get(k))
+    if pay:
+        comp += f"&nbsp;&nbsp;\u00b7&nbsp;&nbsp;<span style=\"color:{INK}\">{pay}</span>"
+
+    # Quiet footer: when + where it came from on the left, the link on the right.
+    age = age_label(item.get("posted_ts"))
+    fresh = age in ("today", "1d ago")
+    meta = " \u00b7 ".join(x for x in (
+        f"<span style=\"color:{GOOD};font-weight:600\">posted {age}</span>" if fresh
+        else (f"posted {age}" if age else ""),
+        f"via {esc(item['source'])}" if item.get("source") else "") if x)
+    footer = (
+        f"<table role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" "
+        f"style=\"margin:12px 0 0;border-top:1px solid {HAIRLINE}\"><tr>"
+        f"<td style=\"font-family:{FONT};padding:10px 0 0;font-size:12px;color:{INK3}\">{meta}</td>"
+        f"<td align=\"right\" style=\"font-family:{FONT};padding:10px 0 0;font-size:13px;"
+        f"font-weight:600;white-space:nowrap\">"
+        # A lead's own block already links the post, so no second link here.
+        + ("" if item.get("lead") else
+           f"<a href=\"{esc(item['url'])}\" style=\"color:{ACCENT};text-decoration:none\">"
+           f"View role \u2192</a>")
+        + "</td></tr></table>")
     # A word, not a number. The number is a ranking device for the code; what you
     # need to know is whether you clear this role's bar. Leads get no verdict at
     # all — see the note in main(): there is not enough in a hiring post to
@@ -2301,8 +2327,8 @@ def card(item, dim=False):
     score_bg = "#eaf6ee" if strong else CANVAS
     return (
         f"<table role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" "
-        f"style=\"background:{CARD};border:1px solid {HAIRLINE};border-radius:14px;"
-        f"margin:0 0 10px\"><tr>"
+        f"style=\"background:{CARD};border:1px solid {TONES['good'][2] if strong else HAIRLINE};"
+        f"border-radius:14px;margin:0 0 10px\"><tr>"
         f"<td style=\"padding:16px 18px\">"
         f"<table role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\"><tr>"
         f"<td valign=\"top\" style=\"font-family:{FONT}\">"
@@ -2323,6 +2349,7 @@ def card(item, dim=False):
         f"{fit_row}"
         f"{context_block(item)}"
         f"{match_line(item)}"
+        f"{footer}"
         f"</td></tr></table>"
     )
 
@@ -2367,21 +2394,25 @@ def discovery_banner():
         return ""
     total = st.get("watchlist_total", "?")
     if not st.get("ok"):
-        color, msg = "#b00", f"⚠ Discovery FAILED: {html.escape(str(st.get('error') or 'unknown'))}"
+        tone = "bad"
+        msg = f"Discovery failed: {html.escape(str(st.get('error') or 'unknown'))}"
     elif st.get("added"):
-        names = ", ".join(st.get("added_names", [])[:8])
-        color = "#2a7"
-        msg = (f"✓ Discovery: probed {st.get('probed', 0)}, "
-               f"added {st.get('added')} — {html.escape(names)}")
+        # added_names are "ashby:david-ai" — drop the provider, show "David AI".
+        names = ", ".join(pretty_company(n.split(":")[-1])
+                          for n in st.get("added_names", [])[:8])
+        tone = "good"
+        msg = f"Discovery added {st.get('added')} companies: {html.escape(names)}"
     else:
-        color = "#999"
-        msg = f"Discovery ran: probed {st.get('probed', 0)}, no new companies today"
-    return (f"<div style='font-family:sans-serif;font-size:12px;color:{color};"
-            f"border-left:3px solid {color};padding:2px 0 2px 8px;margin:0 0 12px'>"
-            f"{msg} · watchlist now {total} companies</div>")
+        tone = "neutral"
+        msg = f"Discovery checked {st.get('probed', 0)} companies, none new"
+    color, bg, border = TONES[tone]
+    return (f"<div style=\"font-family:{FONT};font-size:12px;line-height:17px;color:{color};"
+            f"background:{bg};border:1px solid {border};border-radius:10px;"
+            f"padding:8px 12px;margin:16px 0 0\">"
+            f"{msg} \u00b7 watching {total} boards</div>")
 
 
-def build_html(items, title="Companies digest"):
+def build_html(items, title="Companies digest", banner=""):
     now = datetime.now().strftime("%A, %B %-d")
     clock = datetime.now().strftime("%-I:%M %p").lower()
     header = (
@@ -2389,7 +2420,7 @@ def build_html(items, title="Companies digest"):
         f"<div style=\"font-size:26px;font-weight:600;color:{INK};letter-spacing:-.02em\">"
         f"{html.escape(title)}</div>"
         f"<div style=\"margin:5px 0 0;font-size:13px;color:{INK3}\">{now} \u00b7 {clock}</div>"
-        f"</div>")
+        f"</div>") + banner
     if not items:
         return _shell(header + (
             f"<div style=\"font-family:{FONT};margin:22px 0 0;padding:20px 18px;"
@@ -2723,7 +2754,7 @@ def main():
         send_email(build_html(grok, title="Hiring posts from X"),
                    subject=subject_for(SUBJECT_X), thread="x")
     if picked or SEND_WHEN_EMPTY:
-        send_email(discovery_banner() + build_html(picked))
+        send_email(build_html(picked, banner=discovery_banner()))
     elif grok:
         print("[info] only X/Grok leads this run — nothing for the main digest")
     else:

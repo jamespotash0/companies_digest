@@ -80,6 +80,22 @@ def test_seniority_words_win_over_a_target_stem():
 
 
 @case
+def test_a_senior_word_inside_a_target_stem_does_not_veto_it():
+    """Lead PM and Chief of Staff were added on request 2026-11-23. The stem
+    excuses only its own words: anything senior left over still drops."""
+    saved = C.RESUME["target_titles"]
+    C.RESUME["target_titles"] = saved + ["lead product manager", "chief of staff"]
+    try:
+        for t in ["Lead Product Manager", "Chief of Staff", "Chief of Staff to the CEO"]:
+            check(C.title_is_target(t), f"{t!r} should pass the role gate")
+        for t in ["Senior Lead Product Manager", "VP, Chief of Staff", "Product Lead",
+                  "Chief Product Officer"]:
+            check(not C.title_is_target(t), f"{t!r} is too senior but passed")
+    finally:
+        C.RESUME["target_titles"] = saved
+
+
+@case
 def test_nyc_beats_a_second_city_in_the_same_string():
     """A posting listing both should rank as NYC, not SF."""
     equal(C.location_tier("New York, NY or San Francisco, CA", ""), "nyc")
