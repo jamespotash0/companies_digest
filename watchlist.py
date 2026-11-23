@@ -459,16 +459,38 @@ if __name__ == "__main__":
 FUNDED_FILE = "funded_companies.json"
 
 
+# The funding digest lives in its own repo now (startup_digest) and publishes
+# its hand-off to that repo's `state` branch. Point this at the raw URL and the
+# companies it found reach this watchlist the next morning. Public repos, so a
+# plain GET — no token, no shared package.
+FUNDED_URL = os.environ.get("FUNDED_COMPANIES_URL", "")
+
+
 def ingest_funded(path=FUNDED_FILE):
-    """Feed the funding digest's hand-off file into the watchlist, then re-probe
-    the board-less ones. Idempotent: an already-checked company only refreshes
-    its funding flag, so re-reading the same rolling file every day is cheap."""
-    try:
-        with open(path) as f:
-            rows = json.load(f)
-    except FileNotFoundError:
-        print(f"[watchlist] no {path} — funding digest hasn't run yet")
-        rows = []
+    """Feed the funding digest's hand-off into the watchlist, then re-probe the
+    board-less ones. Idempotent: an already-checked company only refreshes its
+    funding flag, so re-reading the same rolling file every day is cheap.
+
+    Reads FUNDED_COMPANIES_URL when set, falling back to a local file. Never
+    fatal — without the hand-off this digest runs on its own sources, which is a
+    smaller digest, not a broken one.
+    """
+    rows = []
+    if FUNDED_URL:
+        try:
+            with urllib.request.urlopen(
+                    urllib.request.Request(FUNDED_URL, headers=UA), timeout=20) as r:
+                rows = json.loads(r.read().decode())
+            print(f"[watchlist] {len(rows)} funded compan(ies) from the startup digest")
+        except Exception as e:
+            print(f"[watchlist] hand-off unavailable ({e}) — own sources only")
+    if not rows:
+        try:
+            with open(path) as f:
+                rows = json.load(f)
+        except FileNotFoundError:
+            if not FUNDED_URL:
+                print(f"[watchlist] no {path} and no FUNDED_COMPANIES_URL set")
     for r in rows:
         try:
             detect_and_add(r["company"], r.get("domain"), funding=r.get("funding"))

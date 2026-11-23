@@ -122,5 +122,15 @@ def test_sf_substring_does_not_fire_inside_a_word():
     equal(C.location_tier("Dusseldorf, Germany", ""), "")
 
 
+@case
+def test_role_location_is_what_the_companies_digest_gates_on():
+    """companies_digest must gate on the POSTING's location, never a company HQ."""
+    import companies_digest as C
+    # A posting in New York stays, whatever the company is.
+    equal(C.location_tier("New York, NY", "Our headquarters are in London, UK"), "nyc")
+    # ...and a London posting drops, whatever the company is.
+    equal(C.location_tier("London, UK", "We are a New York company"), "")
+
+
 if __name__ == "__main__":
     main("gates")

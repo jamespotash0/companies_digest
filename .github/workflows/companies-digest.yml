@@ -56,11 +56,12 @@ jobs:
 
       # Durable state on the `state` branch. This workflow owns the job-search
       # files (seen-cache, ATS watchlist, Getro scan cursor) and only READS
-      # funded_companies.json, which the funding workflow writes.
+      # funded_companies.json now comes from the startup_digest repo over
+      # HTTPS (FUNDED_COMPANIES_URL), not from this repo's state branch.
       - name: Restore state
         run: |
           git fetch -q origin state 2>/dev/null || true
-          for f in seen_jobs.json ats_watchlist.json getro_networks.json funded_companies.json; do
+          for f in seen_jobs.json ats_watchlist.json getro_networks.json; do
             git cat-file -e "origin/state:$f" 2>/dev/null \
               && git show "origin/state:$f" > "$f" && echo "restored $f" || true
           done
@@ -86,6 +87,8 @@ jobs:
       # the ones that had no board yet. Non-fatal.
       - name: Add funded companies to watchlist
         continue-on-error: true
+        env:
+          FUNDED_COMPANIES_URL: ${{ vars.FUNDED_COMPANIES_URL }}
         run: python watchlist.py
 
       # Same as the funding workflow: the compiled profile (resume-derived titles,

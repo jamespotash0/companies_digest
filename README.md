@@ -1,30 +1,46 @@
-# Job-search automation
+# Companies digest
 
-Two daily email digests plus a loop that connects them: one finds startups that
-just raised (your outreach list), the other finds the newest job postings ranked
-against your resume (your apply list), and companies discovered by the first feed
-the second. Runs free or near-free on GitHub Actions.
+A daily email of the newest job postings for your target roles — gated on title,
+seniority and location, and ranked against your resume. Plus a second email of
+hiring posts from X. Runs free or near-free on GitHub Actions.
 
 ```
-FUNDING WORKFLOW (8am)                 JOBS WORKFLOW (~9am)
-funding_digest.py ──► funded_companies.json ──► watchlist.py ─┐
-  (who just raised,                           getro.py ───────┼─► ats_watchlist.json ──► companies_digest.py
-   enriched with contacts)                    discover.py ────┘                          (newest roles, scored)
+getro.py ─────┐
+discover.py ──┼──► ats_watchlist.json ──► companies_digest.py ──► two emails
+startup_digest┘      (companies that just raised, fetched over HTTPS)
 ```
+
+Companies that just raised come from
+[startup_digest](https://github.com/jamespotash0/startup_digest), a separate
+repo that watches funding news. It publishes what it finds; this repo probes
+those companies' job boards and scores the postings.
 
 ## The pieces
 
 | Piece | What it does |
 |---|---|
-| **Funding digest** (`funding_digest.py`) | Daily email of startups that just raised, filtered to your sector/geography, with AI company summaries and founder contacts on the top matches. |
 | **Companies digest** (`companies_digest.py`) | Daily email of the newest postings for your target roles, gated on title/seniority/location and ranked by resume fit. Runs that find nothing new stay silent (`SEND_WHEN_EMPTY=1` to always send). |
-| **The loop** (`watchlist.py`) | Shared `ats_watchlist.json`. Companies from the funding digest flow into the job digest, and their postings get a 🚀 badge plus a score bonus. |
+| **The watchlist** (`watchlist.py`) | `ats_watchlist.json` — every company whose job board is worth reading. Ingests the startup_digest hand-off, probes ATS boards, re-probes ones that had no board yet, and prunes boards that go dead. |
 | **Bulk feed** (`getro.py`) | Sweeps the public Getro API — the portfolio job boards of hundreds of VC funds — and reads real ATS tokens out of apply URLs. Keyless. This is what makes the watchlist big. |
-| **Long tail** (`discover.py`) | Web-searches "we're hiring" posts and hiring roundups, probes each company's ATS, adds the hits. Needs `ANTHROPIC_API_KEY`. |
+| **Long tail** (`discover.py`) | Web-searches "we're hiring" posts and hiring roundups, probes each company's ATS, adds the hits. Needs an LLM key. |
 
-Per-piece detail: [docs/ENRICHMENT_README.md](docs/ENRICHMENT_README.md),
-[docs/COMPANIES_README.md](docs/COMPANIES_README.md),
+Per-piece detail: [docs/COMPANIES_README.md](docs/COMPANIES_README.md),
 [docs/LOOP_README.md](docs/LOOP_README.md).
+
+## Companies that just raised
+
+`startup_digest` publishes `funded_companies.json` to its own `state` branch
+each morning. Point this repo at it and freshly-funded companies join the
+watchlist automatically:
+
+```bash
+FUNDED_COMPANIES_URL=https://raw.githubusercontent.com/<you>/startup_digest/state/funded_companies.json
+```
+
+Public repos, so it's a plain GET — no token. Unset or unreachable and the
+digest runs on its own sources: a smaller digest, not a broken one. The hand-off
+is a day behind by design — a raise found at 8am reaches this digest the next
+morning.
 
 ---
 
@@ -124,7 +140,6 @@ thirty, a compiled profile older than your resume means last month's filters.
 ### 5. Run it
 
 ```bash
-.venv/bin/python funding_digest.py     # who just raised
 .venv/bin/python companies_digest.py   # what they and 400 other boards posted
 .venv/bin/python getro.py              # bulk-fill the watchlist (run this first, once)
 ```
@@ -135,7 +150,6 @@ Push your fork and enable Actions. Three workflows ship with it:
 
 | Workflow | Schedule | Runs |
 |---|---|---|
-| `daily-digest.yml` | 8am ET | `funding_digest.py` only. Funding side; writes `funded_companies.json` for the jobs side |
 | `companies-digest.yml` | ~9am ET | `getro.py` → `discover.py` → `watchlist.py` → `companies_digest.py` (+ a second "X Hiring Posts" email when that source is on) |
 | `tests.yml` | every push | `tests/run.py` |
 
@@ -189,7 +203,6 @@ A few worth knowing about:
 | Only genuinely new postings | `JOB_FRESH_ONLY_DAYS=10` — stops a newly-added board dumping its back catalogue |
 | Keep late-stage companies | `JOB_EXCLUDE_LATE_STAGE=0` |
 | Rename the sender / subjects | `DIGEST_FROM_NAME`, `DIGEST_SUBJECT_JOBS`, `DIGEST_SUBJECT_X` |
-| Lower API spend | `FUNDING_ENRICH_TOP_N=8`, or `=0` to turn AI summaries off |
 | Fewer sources | `JOB_USE_MUSE=0`, `JOB_USE_ADZUNA=0`, … (one flag per source) |
 
 Lists are comma-separated, and an explicitly empty value means an empty list —
@@ -251,9 +264,6 @@ newest first, with no verdict: a founder saying "we're hiring" often never says
 for what and states no bar, so a number would be measuring the format rather
 than the lead.
 
-The funding digest scores headlines on its own weights (`FUNDING_FOCUS_POINTS`,
-`FUNDING_LOC_POINTS`, `FUNDING_LOC2_POINTS`, `FUNDING_ROUND_POINTS`) with its own
-cutoff (`FUNDING_BEST_SCORE`).
 
 ### The ATS watchlist
 
@@ -280,9 +290,7 @@ Add tokens to `GREENHOUSE_COMPANIES` / `LEVER_COMPANIES` / `ASHBY_COMPANIES` in
 
 | File | Role |
 |---|---|
-| `funding_digest.py` | Feeds → raise detection → geo/sector gate → score → enrich → email |
 | `companies_digest.py` | Sources → title/location gates → score → dedupe → email |
-| `enrich.py` | Anthropic web-search research + Hunter.io email lookup, cached |
 | `watchlist.py` | `ats_watchlist.json` reader/writer: funded flags, stage facts, ATS probing, re-probe queue |
 | `getro.py` | Getro network sweep; also harvests company-size buckets |
 | `discover.py` | AI web-search company discovery |
@@ -291,7 +299,6 @@ Add tokens to `GREENHOUSE_COMPANIES` / `LEVER_COMPANIES` / `ASHBY_COMPANIES` in
 | `doctor.py` | Pre-flight: every setup failure in this repo is silent, so it checks them and prints the fix |
 | `tests/` | Unit suite, no network. `run.py` pins `JOB_IGNORE_PROFILE=1` so it tests the code, not your profile |
 | `tests/check_profile.py` | The other half: your **compiled** profile vs 34 labelled real postings |
-| `evals/` | Accuracy checks for the model-decided parts (costs API calls) |
 
 State files, all JSON on disk and on the `state` branch in CI:
 `ats_watchlist.json` (companies + ATS tokens + funded/stage facts),
@@ -336,7 +343,6 @@ Accuracy checks that need the network and an API key live in `evals/` and are
 deliberately outside `tests/run.py`:
 
 ```bash
-python evals/eval_enrich.py --limit 3      # cheap smoke test
 python tests/verify_grok_quotes.py         # checks X quotes against source posts
 ```
 
@@ -374,7 +380,7 @@ Two paid APIs, both optional, both yours to sign up for:
 
 | Key | Provider | Roughly what it costs |
 |---|---|---|
-| `ANTHROPIC_API_KEY` **or** `OPENAI_API_KEY` | console.anthropic.com / platform.openai.com | The biggest line, and the only setting here that can run up a bill. It is **capped at 10 raises per run by default** — set `FUNDING_ENRICH_TOP_N=all` for every raise (up to 40/day), an integer to change the cap, or `0` to turn enrichment off entirely and need no LLM key at all. `discover.py` adds one sweep per angle per run (2 by default). |
+| `ANTHROPIC_API_KEY` **or** `OPENAI_API_KEY` | console.anthropic.com / platform.openai.com | Only `discover.py` uses it here — two web-search sweeps per run, a few cents. Unset and that one source turns off; every job board still works. |
 | `GROK_API_KEY` | console.x.ai | ~$0.005 per X search — cents per month. |
 
 `HUNTER_API_KEY` (hunter.io) has a free tier of ~50 lookups/month; the script
@@ -392,7 +398,7 @@ provider.
 GitHub Actions minutes come out of your own account's allowance, which is free
 for public repositories.
 
-Set `FUNDING_ENRICH_TOP_N=0` and leave `GROK_API_KEY` unset and this costs
+Leave the LLM key and `GROK_API_KEY` unset and this costs
 nothing at all — you lose the AI company summaries and the X hiring posts, and
 keep every job board.
 
