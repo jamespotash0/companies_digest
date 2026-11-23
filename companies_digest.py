@@ -180,10 +180,13 @@ def main():
     # which getro.py produces in a single sweep — would not finish inside the
     # Actions run; these are independent read-only calls to six different hosts,
     # so the only real limit is politeness per host.
-    boards = ([(fetch_greenhouse, t) for t in gh]
+    # Workable 429s concurrent callers but takes ~6 req/s from one, so all its
+    # boards go to ONE worker, run one at a time, queued first so it overlaps the
+    # rest.
+    boards = ([(lambda ts: [j for t in ts for j in fetch_workable(t)], wk)]
+              + [(fetch_greenhouse, t) for t in gh]
               + [(fetch_lever, t) for t in lv]
               + [(fetch_ashby, t) for t in ash]
-              + [(fetch_workable, t) for t in wk]
               + [(fetch_smartrecruiters, t) for t in sr]
               + [(fetch_rippling, t) for t in rip])
     if USE_WORKDAY:
@@ -193,7 +196,7 @@ def main():
         with ThreadPoolExecutor(max_workers=BOARD_WORKERS) as ex:
             for lst in ex.map(lambda fa: fa[0](fa[1]), boards):
                 raw += lst
-        print(f"[info] {len(boards)} boards fetched in "
+        print(f"[info] {len(boards) - 1 + len(wk)} boards fetched in "
               f"{datetime.now(timezone.utc).timestamp() - t0:.1f}s")
     print(f"[info] fetched {len(raw)} raw postings")
 
