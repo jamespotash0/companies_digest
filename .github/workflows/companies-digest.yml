@@ -129,7 +129,7 @@ jobs:
           EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
           EMAIL_TO:   ${{ secrets.EMAIL_TO }}
           # Optional sources — each auto-disables if its key is unset (see the
-          # USE_ADZUNA / USE_GROK_X toggles in companies_digest.py).
+          # USE_ADZUNA / USE_GROK_X toggles in digest/settings.py).
           ADZUNA_APP_ID:  ${{ secrets.ADZUNA_APP_ID }}
           ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
           # Either name works (the script aliases GROK_API_KEY -> XAI_API_KEY).

@@ -30,7 +30,7 @@ Both cache steps are already added to the two workflow files.
 - Token guessing isn't perfect — some companies use other ATSs or custom career
   pages and won't be detected. That's fine; they just won't auto-add.
 - You can still hand-add companies to `GREENHOUSE_COMPANIES` etc. in
-  companies_digest.py; auto-detected tokens merge on top of your manual list.
+  digest/boards.py; auto-detected tokens merge on top of your manual list.
 - To inspect what's been collected, open `ats_watchlist.json` (downloadable from
   a workflow run's cache, or just watch the companies digest logs for
   "+N auto-detected companies").

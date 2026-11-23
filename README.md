@@ -277,7 +277,7 @@ boards.greenhouse.io/<TOKEN>    jobs.lever.co/<TOKEN>    jobs.ashbyhq.com/<TOKEN
 ```
 
 Add tokens to `GREENHOUSE_COMPANIES` / `LEVER_COMPANIES` / `ASHBY_COMPANIES` in
-`companies_digest.py`; Workday boards need a tenant/wd/site entry in
+`digest/boards.py`; Workday boards need a tenant/wd/site entry in
 `WORKDAY_COMPANIES`. Pin the funds whose portfolios match your lane with
 `GETRO_NETWORKS="1200 803"`, and widen a single sweep with
 `python getro.py --scan 800`.
@@ -290,7 +290,12 @@ Add tokens to `GREENHOUSE_COMPANIES` / `LEVER_COMPANIES` / `ASHBY_COMPANIES` in
 
 | File | Role |
 |---|---|
-| `companies_digest.py` | Sources → title/location gates → score → dedupe → email |
+| `companies_digest.py` | Entry point: `main()` wires sources → gates → score → dedupe → email |
+| `digest/settings.py` | Env helpers, `RESUME` defaults, source toggles, caps; applies `profile.compiled.json` |
+| `digest/sources.py`, `digest/boards.py` | Open-web job sources; ATS board fetchers + hand-pinned company lists |
+| `digest/filters.py`, `digest/location.py`, `digest/stage.py` | Title gate + JD facts; geography; funding/stage signals |
+| `digest/scoring.py` | Resume-fit score |
+| `digest/render.py`, `digest/mailer.py`, `digest/net.py` | Email HTML; SMTP + threading; HTTP/text helpers |
 | `watchlist.py` | `ats_watchlist.json` reader/writer: funded flags, stage facts, ATS probing, re-probe queue |
 | `getro.py` | Getro network sweep; also harvests company-size buckets |
 | `discover.py` | AI web-search company discovery |
@@ -356,7 +361,7 @@ python tests/check_profile.py              # your compiled filters vs 34 labelle
 
 ### Adding a job source
 
-1. Write `fetch_<source>()` in `companies_digest.py` returning dicts with
+1. Write `fetch_<source>()` in `digest/sources.py` returning dicts with
    `title`, `company`, `location`, `url`, `content`, `source`, and `posted_ts`
    when the API gives a date.
 2. Add a `USE_<SOURCE> = env_flag("JOB_USE_<SOURCE>", True)` toggle next to the

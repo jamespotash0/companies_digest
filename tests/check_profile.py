@@ -21,7 +21,7 @@ ROOT = os.path.dirname(HERE)
 os.environ.pop("JOB_IGNORE_PROFILE", None)      # the opposite of the test suite
 sys.path.insert(0, ROOT)
 
-import companies_digest as C          # noqa: E402
+from digest import filters as F  # noqa: E402
 
 FIX = json.load(open(os.path.join(HERE, "fixtures", "postings.json")))
 
@@ -40,7 +40,7 @@ def main():
 
     bad = []
     for f in FIX["titles"]:
-        got = C.title_is_target(f["title"])
+        got = F.title_is_target(f["title"])
         if got != f["keep"]:
             bad.append((f, got))
     for f, got in bad:

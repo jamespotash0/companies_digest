@@ -51,7 +51,7 @@ data/ML engineer, devops, etc. are hard-excluded (`SWE_EXCLUDE`) — but
 ## Setup
 Same repo and secrets as the funding digest (`EMAIL_USER`, `EMAIL_PASS`,
 `EMAIL_TO`). Just add:
-- `companies_digest.py`
+- `companies_digest.py` and the `digest/` package
 - `.github/workflows/companies-digest.yml`
 
 Then: Actions tab → "Companies digest (3x daily)" → Run workflow to test. Dedup
@@ -63,7 +63,7 @@ a run that turns up nothing new **skips the email** rather than sending an empty
 same-day. Set `SEND_WHEN_EMPTY=1` (env / Actions secret) to always send — e.g.
 as a daily heartbeat or while debugging.
 
-## Tuning (top of companies_digest.py)
+## Tuning (digest/settings.py)
 - `RESUME` — your titles/skills/domains/years. **Pre-loaded from the repo author's
   resume** (PM · PropTech/B2B SaaS · AI workflow · accessibility/telecom · NYC).
   Edit as your resume evolves — this vocabulary is what each JD is scored against.

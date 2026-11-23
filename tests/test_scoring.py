@@ -13,7 +13,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 os.environ.setdefault("JOB_IGNORE_PROFILE", "1")   # test the code, not a local profile
 sys.path.insert(0, os.path.dirname(HERE))
 
-import companies_digest as C          # noqa: E402
+from digest import filters as F, location as L, render as R, scoring as SC, settings as CFG, stage as ST  # noqa: E402
 from harness import case, check, equal, main   # noqa: E402
 
 # Deliberately full of words that CONTAIN resume keywords without being them.
@@ -24,7 +24,7 @@ INNOCENT = ("We are building a digital platform for capital markets. Email us. "
 
 @case
 def test_short_keywords_do_not_match_inside_words():
-    bd = C.score_breakdown("Office Manager", INNOCENT)
+    bd = SC.score_breakdown("Office Manager", INNOCENT)
     hits = {label: terms for label, _, terms in bd["parts"]}
     check(not hits.get("resume skills"),
           f"phantom skill hits in innocent text: {hits.get('resume skills')}")
@@ -41,7 +41,7 @@ def test_short_keywords_do_not_match_inside_words():
 
 @case
 def test_genuine_keywords_still_match():
-    bd = C.score_breakdown(
+    bd = SC.score_breakdown(
         "Associate Product Manager, AI",
         "2+ years. Own the roadmap and PRDs, work cross-functional in Figma and SQL. "
         "Seed-stage B2B SaaS workflow automation for real estate.")
@@ -60,7 +60,7 @@ def test_breakdown_parts_sum_to_the_total():
     for title, body in [("Product Manager", "3+ years, seed stage, AI workflow tools"),
                         ("Forward Deployed Engineer", "LLM agents at enterprise customers"),
                         ("Office Manager", INNOCENT)]:
-        bd = C.score_breakdown(title, body)
+        bd = SC.score_breakdown(title, body)
         equal(sum(p[1] for p in bd["parts"]), bd["total"], f"{title!r} parts vs total")
 
 
@@ -69,13 +69,13 @@ def test_qualification_score_agrees_with_the_breakdown():
     """qualification_score is kept as a thin wrapper; it must not drift."""
     for title, body in [("Product Manager", "3+ years at a seed-stage AI startup"),
                         ("Deployment Strategist", "Deploy agents onsite in NYC")]:
-        equal(C.qualification_score(title, body), C.score_breakdown(title, body)["total"])
+        equal(SC.qualification_score(title, body), SC.score_breakdown(title, body)["total"])
 
 
 @case
 def test_senior_requirement_is_penalised():
-    junior = C.score_breakdown("Product Manager", "We want 2+ years of experience")
-    senior = C.score_breakdown("Product Manager", "We want 8+ years of experience")
+    junior = SC.score_breakdown("Product Manager", "We want 2+ years of experience")
+    senior = SC.score_breakdown("Product Manager", "We want 8+ years of experience")
     check(senior["total"] < junior["total"],
           f"senior {senior['total']} should score below junior {junior['total']}")
 
@@ -86,12 +86,12 @@ def test_location_and_funding_award_no_points():
     as a chip; a recent raise is shown as a badge. Neither may move the score --
     a NYC posting that wants ten years is still a role you will not get, and a
     location bonus made exactly that kind of posting look competitive."""
-    check(not hasattr(C, "LOC_BONUS") or not any(C.LOC_BONUS.values()),
+    check(not hasattr(SC, "LOC_BONUS") or not any(SC.LOC_BONUS.values()),
           "location still awards points")
-    equal(C.FUNDED_BONUS, 0, "a recent raise still moves the score")
+    equal(ST.FUNDED_BONUS, 0, "a recent raise still moves the score")
     # ...but both must still be usable as filters / labels.
-    equal(C.location_tier("New York, NY", ""), "nyc")
-    check("NYC" in C.LOC_LABEL.values(), "the location tier label is gone")
+    equal(L.location_tier("New York, NY", ""), "nyc")
+    check("NYC" in L.LOC_LABEL.values(), "the location tier label is gone")
 
 
 @case
@@ -100,13 +100,13 @@ def test_best_match_threshold_actually_splits_the_email():
     is the owner's call and pinning the number would just create friction. What
     must hold is that it is positive and that build_html really splits on it —
     a threshold nothing branches on is a threshold that silently stopped working."""
-    check(C.BEST_MATCH_MIN > 0, f"threshold must be positive, got {C.BEST_MATCH_MIN}")
+    check(L.BEST_MATCH_MIN > 0, f"threshold must be positive, got {L.BEST_MATCH_MIN}")
     def item(q):
         return {"title": "Product Manager", "company": "acme", "url": "http://x",
                 "location": "New York, NY", "source": "Ashby", "posted_ts": None,
                 "q": q, "loc_tier": "nyc", "funding": {}, "facts": {},
                 "breakdown": {"parts": [("title", 12, ["product manager"])], "total": 12}}
-    html = C.build_html([item(C.BEST_MATCH_MIN), item(C.BEST_MATCH_MIN - 1)])
+    html = R.build_html([item(L.BEST_MATCH_MIN), item(L.BEST_MATCH_MIN - 1)])
     check("Best matches" in html, "no Best matches section rendered")
     check("Worth a look" in html, "below-threshold posting was not put in its own section")
 
@@ -127,7 +127,7 @@ def test_stage_earns_no_points_at_all():
     for body in ("Seed-stage and high-growth, shipping fast from the ground up.",
                  "A high-growth publicly traded company.",
                  "We move fast."):
-        bd = C.score_breakdown("Product Manager", body)
+        bd = SC.score_breakdown("Product Manager", body)
         labels = {l for l, _, _ in bd["parts"]}
         check(not (labels & {"early stage", "early stage (soft)", "late stage", "stage"}),
               f"stage scored: {labels}")
@@ -137,17 +137,17 @@ def test_stage_earns_no_points_at_all():
 def test_the_score_has_only_the_three_dimensions_that_measure_fit():
     """Title, location and stage are filters. Anything else in `parts` means a
     floor is creeping back under postings that do not fit."""
-    equal(set(C.WEIGHTS), {"seniority fit", "resume skills", "your domains"})
-    bd = C.score_breakdown("Forward Deployed Product Manager",
+    equal(set(SC.WEIGHTS), {"seniority fit", "resume skills", "your domains"})
+    bd = SC.score_breakdown("Forward Deployed Product Manager",
                            "Seed-stage NYC startup. 2+ years. Roadmap, PRDs, Figma.")
-    check({l for l, _, _ in bd["parts"]} <= set(C.WEIGHTS),
+    check({l for l, _, _ in bd["parts"]} <= set(SC.WEIGHTS),
           f"unexpected scored dimension: {[l for l, _, _ in bd['parts']]}")
 
 
 @case
 def test_ipo_does_not_match_inside_a_longer_word():
     """The late list is word-boundary matched now that "ipo" is on it."""
-    bd = C.score_breakdown("Product Manager", "We build apps for the ipod and beyond.")
+    bd = SC.score_breakdown("Product Manager", "We build apps for the ipod and beyond.")
     label, _ = _stage_part(bd)
     check(label != "late stage", "'ipo' matched inside 'ipod'")
 
@@ -156,12 +156,12 @@ def test_ipo_does_not_match_inside_a_longer_word():
 def test_stage_points_rank_the_rounds_against_your_band():
     """Your band is seed-Series B. C is neutral, D+ is a penalty."""
     for r in ("Series A", "seed", "Pre-Seed", "Series B"):
-        equal(C.stage_points(r), 6)
-    equal(C.stage_points("Series C"), 0)
+        equal(ST.stage_points(r), 6)
+    equal(ST.stage_points("Series C"), 0)
     for r in ("Series D", "IPO", "acquired"):
-        equal(C.stage_points(r), -6)
-    check(C.stage_points("") is None, "an unknown round must not score")
-    check(C.stage_points(None) is None, "a missing round must not score")
+        equal(ST.stage_points(r), -6)
+    check(ST.stage_points("") is None, "an unknown round must not score")
+    check(ST.stage_points(None) is None, "a missing round must not score")
 
 
 # ---------------------------------------------------------------- misses
@@ -173,7 +173,7 @@ def test_stage_points_rank_the_rounds_against_your_band():
 def test_misses_name_the_signals_that_did_not_fire():
     """A score is only half an explanation: the email prints these as the plain
     reason a role is not a better match."""
-    bd = C.score_breakdown("Product Manager", "Join our team.")
+    bd = SC.score_breakdown("Product Manager", "Join our team.")
     got = {label for label, _ in bd["misses"]}
     for want in ("seniority", "skills", "domains"):
         check(want in got, f"missing miss {want!r}; got {got}")
@@ -181,7 +181,7 @@ def test_misses_name_the_signals_that_did_not_fire():
 
 @case
 def test_a_signal_is_never_both_a_hit_and_a_miss():
-    bd = C.score_breakdown(
+    bd = SC.score_breakdown(
         "Associate Product Manager",
         "2+ years. Own the roadmap and PRDs in Figma and SQL. Seed-stage AI workflow tools.")
     hits = {label for label, _, _ in bd["parts"]}
@@ -199,7 +199,7 @@ def test_a_signal_is_never_both_a_hit_and_a_miss():
 @case
 def test_misses_are_worth_zero_and_stay_out_of_the_arithmetic():
     """The email prints parts AND misses; only parts may move the total."""
-    bd = C.score_breakdown("Product Manager", "We sell boots.")
+    bd = SC.score_breakdown("Product Manager", "We sell boots.")
     equal(sum(p[1] for p in bd["parts"]), bd["total"], "misses leaked into the total")
 
 
@@ -212,10 +212,10 @@ def test_the_email_shows_no_arithmetic():
             "location": "New York, NY", "source": "Ashby", "posted_ts": None,
             "loc_tier": "nyc", "funding": {}, "facts": {"years": "5+ yrs",
             "years_min": 5, "years_domain": "pm"}}
-    item["breakdown"] = C.score_breakdown("Product Manager",
+    item["breakdown"] = SC.score_breakdown("Product Manager",
                                           "5+ years of product management experience")
     item["q"] = item["breakdown"]["total"]
-    html_out = C.card(item)
+    html_out = R.card(item)
     for banned in ("Why ", "+65", "+25", "&minus;", "\u2212"):
         check(banned not in html_out, f"card still prints arithmetic: {banned!r}")
     check("Strong fit" in html_out or "Good fit" in html_out
@@ -226,7 +226,7 @@ def test_the_email_shows_no_arithmetic():
 @case
 def test_ai_native_skills_are_matched_but_not_as_substrings():
     """The vocabulary a 2026 product req actually uses."""
-    bd = C.score_breakdown(
+    bd = SC.score_breakdown(
         "Product Manager",
         "Use Claude Code to ship agentic features; own the spec, QA and "
         "multivariate landing page experiments.")
@@ -234,7 +234,7 @@ def test_ai_native_skills_are_matched_but_not_as_substrings():
     for want in ("claude code", "agentic", "spec", "qa", "multivariate"):
         check(want in hits, f"missed {want!r}; got {hits}")
     # ...and the traps that come with them.
-    innocent = C.score_breakdown(
+    innocent = SC.score_breakdown(
         "Office Manager",
         "Claudette inspects the specimen per specification in Qatar. "
         "Experimental landings for multivariates.")
@@ -254,7 +254,7 @@ def test_two_spellings_of_one_skill_count_once():
     this a posting that repeats itself outscored one that named more skills."""
     jd = ("Own the roadmap and roadmapping, write PRDs and a PRD, "
           "work on UI and UX and ui/ux, drive go-to-market and GTM.")
-    hits = C._hits(C._skill_re(), C._norm(jd))
+    hits = F._hits(F._skill_re(), F._norm(jd))
     equal(sorted(hits), ["go-to-market", "prd", "roadmap", "ui"])
 
 
@@ -263,7 +263,7 @@ def test_synonyms_never_rewrite_what_you_matched_on():
     """The email PRINTS these terms, so a mapping that changes meaning lies.
     Only spelling variants may collapse."""
     for near_synonym in ("real estate", "machine learning"):
-        equal(C._canon(near_synonym), near_synonym,
+        equal(F._canon(near_synonym), near_synonym,
               f"{near_synonym!r} must not be rewritten to something else")
 
 
@@ -276,8 +276,8 @@ def test_verbosity_does_not_buy_points():
             "experience, roadmap ownership, PRDs, Figma, SQL. Seed-stage AI "
             "workflow automation startup.")
     padded = core + " " + ("We value ownership, impact and craft. " * 120)
-    a = C.score_breakdown("Forward Deployed Product Manager", core)["total"]
-    b = C.score_breakdown("Forward Deployed Product Manager", padded)["total"]
+    a = SC.score_breakdown("Forward Deployed Product Manager", core)["total"]
+    b = SC.score_breakdown("Forward Deployed Product Manager", padded)["total"]
     check(abs(a - b) <= 3, f"padding moved the score {a} -> {b}")
 
 
@@ -285,9 +285,9 @@ def test_verbosity_does_not_buy_points():
 def test_the_score_is_bounded_and_comparable():
     """A 240-char X/Grok lead and an 8,000-char ATS posting for the same role
     must be rankable against each other."""
-    total = sum(C.WEIGHTS.values())
+    total = sum(SC.WEIGHTS.values())
     equal(total, 100, "weights should sum to 100 so the score reads as a percent")
-    bd = C.score_breakdown(
+    bd = SC.score_breakdown(
         "Forward Deployed Product Manager",
         "Seed-stage AI workflow startup. 2+ years. Roadmap, PRDs, Figma, SQL, "
         "discovery, prioritization.")
@@ -301,8 +301,8 @@ def test_seniority_has_no_dead_zone():
     largest single signal, and the band closest to the candidate scored worst."""
     prev = None
     for yrs in (1, 2, 3, 4, 5, 6, 8, 10):
-        f = C.screen_facts(f"We want {yrs}+ years of experience")
-        frac, _ = C.seniority_fraction(f)
+        f = F.screen_facts(f"We want {yrs}+ years of experience")
+        frac, _ = SC.seniority_fraction(f)
         check(frac is not None, f"{yrs}+ years produced no verdict")
         check(frac > 0, f"{yrs}+ years scored zero")
         if prev is not None:
@@ -314,8 +314,8 @@ def test_seniority_has_no_dead_zone():
 def test_a_stretch_is_ranked_down_but_never_gated_out():
     """The chosen posture: a stated bar is soft, especially at seed-Series B.
     Gating on it hid half the in-lane market."""
-    f = C.screen_facts("We want 10+ years of experience")
-    frac, _ = C.seniority_fraction(f)
+    f = F.screen_facts("We want 10+ years of experience")
+    frac, _ = SC.seniority_fraction(f)
     check(0 < frac < 0.5, f"a 10-year bar should rank low but stay visible: {frac}")
 
 
@@ -327,7 +327,7 @@ def test_title_is_a_filter_and_never_a_score():
     ("Forward Deployed Engineer" 24 vs "Product Manager" 12, both exact)."""
     for t in ("Forward Deployed Engineer", "Product Manager",
               "Forward Deployed Product Manager"):
-        labels = {l for l, _, _ in C.score_breakdown(t, "")["parts"]}
+        labels = {l for l, _, _ in SC.score_breakdown(t, "")["parts"]}
         check("title" not in labels, f"{t!r} scored points for its title")
 
 
@@ -337,8 +337,8 @@ def test_hyphenated_titles_score_the_same_as_spaced_ones():
     dropped by the gate."""
     for a, b in [("Forward-Deployed Engineer", "Forward Deployed Engineer"),
                  ("Forward-Deployed Product Manager", "Forward Deployed Product Manager")]:
-        check(C.title_is_target(a), f"{a!r} was dropped by the gate")
-        equal(C.score_breakdown(a, "x")["total"], C.score_breakdown(b, "x")["total"],
+        check(F.title_is_target(a), f"{a!r} was dropped by the gate")
+        equal(SC.score_breakdown(a, "x")["total"], SC.score_breakdown(b, "x")["total"],
               f"{a!r} scored differently from {b!r}")
 
 
@@ -350,7 +350,7 @@ def test_a_bar_years_above_yours_scores_near_zero():
           "Figma, SQL. AI agents, B2B SaaS workflow automation.")
     scores = {}
     for y in (2, 4, 6, 8, 10):
-        scores[y] = C.score_breakdown(
+        scores[y] = SC.score_breakdown(
             "Product Manager", f"{y}+ years of experience. {kw}")["total"]
     check(scores[2] >= 90, f"a role at your level should score high: {scores[2]}")
     check(scores[8] <= 5, f"an 8-year bar should be near zero, got {scores[8]}")
@@ -368,8 +368,8 @@ def test_keywords_cannot_rescue_a_role_you_are_years_short_of():
               "PRDs, discovery, prioritization, Figma, SQL, Notion, Jira, B2B, "
               "SaaS, AI, agents, LLM, workflow, automation, fintech, proptech.")
     bare = "10+ years of experience."
-    a = C.score_breakdown("Product Manager", loaded)["total"]
-    b = C.score_breakdown("Product Manager", bare)["total"]
+    a = SC.score_breakdown("Product Manager", loaded)["total"]
+    b = SC.score_breakdown("Product Manager", bare)["total"]
     check(a <= 10, f"a keyword-stuffed 10-year role still scored {a}")
     check(a - b <= 8, f"keywords moved a hopeless role by {a - b}")
 
@@ -378,9 +378,9 @@ def test_keywords_cannot_rescue_a_role_you_are_years_short_of():
 def test_the_years_filter_lets_unknown_through():
     """Half of all postings state no bar. Silence is not a ten-year requirement,
     so an unstated bar must never be filtered out."""
-    check(C.screen_facts("Join our team and build the future.").get("years_min") is None,
+    check(F.screen_facts("Join our team and build the future.").get("years_min") is None,
           "this fixture should state no bar")
-    check(C.MAX_YEARS > 0, "the filter should be on by default")
+    check(CFG.MAX_YEARS > 0, "the filter should be on by default")
 
 
 @case
@@ -390,7 +390,7 @@ def test_parts_still_sum_to_the_total_after_scaling():
     for jd in ("2+ years of product experience. Roadmap, PRDs, Figma.",
                "8+ years of product management experience. Roadmap, PRDs.",
                "Join our team."):
-        bd = C.score_breakdown("Product Manager", jd)
+        bd = SC.score_breakdown("Product Manager", jd)
         equal(sum(p[1] for p in bd["parts"]), bd["total"], jd[:40])
 
 
@@ -405,16 +405,16 @@ def test_selling_to_big_companies_is_not_being_one():
                "The leading provider of agentic tools for frontier LLMs, "
                "fortune 500 organizations, and b2b saas companies.",
                "Our investors have taken companies to IPO before."):
-        equal(C.late_stage_prose(jd), [], f"false positive on: {jd[:52]}")
+        equal(ST.late_stage_prose(jd), [], f"false positive on: {jd[:52]}")
 
 
 @case
 def test_a_company_describing_itself_as_late_stage_still_counts():
-    check(C.late_stage_prose("We are a publicly traded company on NASDAQ: ACME."),
+    check(ST.late_stage_prose("We are a publicly traded company on NASDAQ: ACME."),
           "missed a real public company")
-    check(C.late_stage_prose("We recently raised a $250 million Series E round."),
+    check(ST.late_stage_prose("We recently raised a $250 million Series E round."),
           "missed a real late round")
-    check(C.late_stage_prose("We are a fortune 500 company with thousands of employees."),
+    check(ST.late_stage_prose("We are a fortune 500 company with thousands of employees."),
           "missed a self-described large company")
 
 
@@ -422,7 +422,7 @@ def test_a_company_describing_itself_as_late_stage_still_counts():
 def test_the_late_stage_filter_is_off_by_default():
     """Dropping a company for its stage costs real roles, and the prose evidence
     is weak. It is opt-in."""
-    check(not C.EXCLUDE_LATE_STAGE,
+    check(not ST.EXCLUDE_LATE_STAGE,
           "the late-stage filter should default off (JOB_EXCLUDE_LATE_STAGE=1 opts in)")
 
 
@@ -444,7 +444,7 @@ def test_max_years_follows_the_repo_config_precedence():
     pre_existing = os.path.exists(path)
     if pre_existing:                      # never clobber a real profile
         return
-    probe = "import companies_digest as C;print(C.MAX_YEARS)"
+    probe = "from digest import settings;print(settings.MAX_YEARS)"
 
     def run(env_extra):
         # This test is specifically about the profile layer, so it must NOT
@@ -478,16 +478,16 @@ def test_geography_asks_whether_you_would_have_to_move():
             ("secondary", "remote", False),      # SF company, remote role
             ("secondary", "hybrid", True), ("secondary", "onsite", True),
             ("us-other", "onsite", True), ("us-other", "remote", False)]:
-        equal(C.needs_relocation(tier, mode), moving, f"{tier}/{mode}")
+        equal(SC.needs_relocation(tier, mode), moving, f"{tier}/{mode}")
 
 
 @case
 def test_nyc_onsite_and_sf_remote_rank_together():
     jd = ("2+ years of product experience. Roadmap, PRDs, Figma. Seed-stage "
           "AI workflow startup, B2B SaaS.")
-    nyc = C.score_breakdown("Product Manager", jd, "nyc", "onsite")["total"]
-    sf_remote = C.score_breakdown("Product Manager", jd, "secondary", "remote")["total"]
-    sf_onsite = C.score_breakdown("Product Manager", jd, "secondary", "onsite")["total"]
+    nyc = SC.score_breakdown("Product Manager", jd, "nyc", "onsite")["total"]
+    sf_remote = SC.score_breakdown("Product Manager", jd, "secondary", "remote")["total"]
+    sf_onsite = SC.score_breakdown("Product Manager", jd, "secondary", "onsite")["total"]
     # "Pretty similarly", not identically: your own metro edges it as a tiebreak
     # (no commute, no timezone), but both are jobs you can do from home, so the
     # gap has to stay small.
@@ -502,15 +502,15 @@ def test_unknown_geography_is_never_penalised():
     """score_breakdown is called without geography in plenty of places. Unknown
     must mean "no opinion", not "assume they'd have to move" -- the same
     fail-open rule the funding digest's HQ gate uses."""
-    equal(C.needs_relocation(None, None), False)
-    equal(C.needs_relocation("", "onsite"), False)
+    equal(SC.needs_relocation(None, None), False)
+    equal(SC.needs_relocation("", "onsite"), False)
 
 
 @case
 def test_an_unqualified_city_is_treated_as_onsite():
     """A posting that just says "Austin, TX" with no work mode means on-site."""
-    equal(C.needs_relocation("us-other", None), True)
-    equal(C.needs_relocation("us-other", ""), True)
+    equal(SC.needs_relocation("us-other", None), True)
+    equal(SC.needs_relocation("us-other", ""), True)
 
 
 @case
@@ -522,10 +522,10 @@ def test_relocation_scales_rather_than_subtracts():
     strong = ("2+ years of product experience. Roadmap, PRDs, Figma, SQL, "
               "discovery. Seed-stage AI workflow startup, B2B SaaS.")
     for jd in (weak, strong):
-        home = C.score_breakdown("Product Manager", jd, "nyc", "onsite")["total"]
-        away = C.score_breakdown("Product Manager", jd, "secondary", "onsite")["total"]
+        home = SC.score_breakdown("Product Manager", jd, "nyc", "onsite")["total"]
+        away = SC.score_breakdown("Product Manager", jd, "secondary", "onsite")["total"]
         check(0 <= away <= home, f"{away} should sit between 0 and {home}")
-        bd = C.score_breakdown("Product Manager", jd, "secondary", "onsite")
+        bd = SC.score_breakdown("Product Manager", jd, "secondary", "onsite")
         equal(sum(p[1] for p in bd["parts"]), bd["total"], "parts must still sum")
 
 
@@ -536,11 +536,11 @@ def test_seniority_uses_one_experience_number():
     worked, but it made every seniority verdict depend on parsing which KIND of
     experience a sentence meant — a lot of machinery riding on a regex, for a
     distinction of half a year."""
-    check("years_pm" not in C.RESUME, "the second experience number is back")
-    qualified = C.screen_facts("5+ years of product management experience")
-    plain = C.screen_facts("5+ years of experience")
+    check("years_pm" not in CFG.RESUME, "the second experience number is back")
+    qualified = F.screen_facts("5+ years of product management experience")
+    plain = F.screen_facts("5+ years of experience")
     equal(qualified.get("years_min"), plain.get("years_min"))
-    equal(C.seniority_fraction(qualified)[0], C.seniority_fraction(plain)[0],
+    equal(SC.seniority_fraction(qualified)[0], SC.seniority_fraction(plain)[0],
           "a qualified bar and a plain one of the same size must score alike")
 
 
@@ -553,14 +553,14 @@ def test_a_perfect_score_is_effectively_unreachable():
 
     Measured over 43 real in-lane postings: best 94, none above, median 47.
     """
-    check(C.SKILL_SATURATION >= 10,
-          f"skills saturate too easily at {C.SKILL_SATURATION}")
+    check(SC.SKILL_SATURATION >= 10,
+          f"skills saturate too easily at {SC.SKILL_SATURATION}")
     ideal = ("2+ years of experience. Own the roadmap, write PRDs, run "
              "discovery, cross-functional in Figma, SQL. Seed-stage AI workflow "
              "automation, B2B SaaS agents.")
-    strong = C.score_breakdown("Product Manager", ideal, "nyc", "onsite")["total"]
+    strong = SC.score_breakdown("Product Manager", ideal, "nyc", "onsite")["total"]
     check(75 <= strong <= 95, f"a strong match should land in the 75-95 band, got {strong}")
-    equal(C.fit_word(strong) in ("Good fit", "Strong fit"), True, C.fit_word(strong))
+    equal(R.fit_word(strong) in ("Good fit", "Strong fit"), True, R.fit_word(strong))
 
 
 @case
@@ -569,7 +569,7 @@ def test_the_local_edge_cannot_lift_a_bad_fit():
     roles rather than a floor under every local one."""
     weak = "8+ years of experience. Some product work."
     for tier, mode in (("nyc", "onsite"), ("us-remote", "remote")):
-        total = C.score_breakdown("Product Manager", weak, tier, mode)["total"]
+        total = SC.score_breakdown("Product Manager", weak, tier, mode)["total"]
         check(total < 20, f"a badly-fitting {tier} role scored {total}")
 
 
@@ -580,7 +580,7 @@ def test_years_in_someone_elses_field_is_not_a_match():
     the point."""
     kw = " Roadmap, PRDs, discovery, Figma, SQL. AI workflow B2B SaaS."
     def score(jd):
-        return C.score_breakdown("Product Manager", jd + kw, "nyc", "onsite")["total"]
+        return SC.score_breakdown("Product Manager", jd + kw, "nyc", "onsite")["total"]
     product = score("3+ years of product management experience.")
     for other in ("3+ years of experience in banking operations.",
                   "3+ years of operations experience.",
@@ -596,8 +596,8 @@ def test_the_first_field_named_wins():
     """"product experience in a banking environment" is a product bar; "banking
     operations experience" is not. Reading the whole window would call both a
     mismatch and drop real product roles at financial companies."""
-    ok = C.screen_facts("3+ years of product experience in a banking environment")
-    bad = C.screen_facts("3+ years of banking operations experience")
+    ok = F.screen_facts("3+ years of product experience in a banking environment")
+    bad = F.screen_facts("3+ years of banking operations experience")
     check(not ok.get("field_mismatch"), f"false mismatch: {ok.get('field_mismatch')}")
     equal(bad.get("field_mismatch"), "banking")
 
@@ -607,7 +607,7 @@ def test_an_unqualified_bar_is_never_a_field_mismatch():
     """Most postings just say "3+ years of experience". Silence is not evidence
     of a different field."""
     for jd in ("3+ years of experience.", "We want 5+ years.", "2-4 years required."):
-        check(not C.screen_facts(jd).get("field_mismatch"), jd)
+        check(not F.screen_facts(jd).get("field_mismatch"), jd)
 
 
 if __name__ == "__main__":

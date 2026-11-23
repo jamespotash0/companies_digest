@@ -25,7 +25,7 @@ import urllib.request
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-import companies_digest as C          # noqa: E402
+from digest import settings as CFG, sources as SRC  # noqa: E402
 
 UA = {"User-Agent": "Mozilla/5.0 (compatible; quote-check)"}
 # r.jina.ai renders the page server-side; x.com itself returns a JS shell with no
@@ -101,8 +101,8 @@ def main():
         print(f"[replay] {len(leads)} leads from {sys.argv[1]}")
     else:
         if not os.environ.get("XAI_API_KEY"):
-            C.load_dotenv()
-        leads = C.fetch_grok_x()
+            CFG.load_dotenv()
+        leads = SRC.fetch_grok_x()
         print(f"[live] {len(leads)} leads from the X/Grok source")
         out = os.environ.get("GROK_CAPTURE")
         if out:

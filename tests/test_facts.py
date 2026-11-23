@@ -16,7 +16,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 os.environ.setdefault("JOB_IGNORE_PROFILE", "1")   # test the code, not a local profile
 sys.path.insert(0, os.path.dirname(HERE))
 
-import companies_digest as C          # noqa: E402
+from digest import filters as F, mailer as M, net as NET, render as R, scoring as SC, settings as CFG  # noqa: E402
 from harness import case, check, equal, main   # noqa: E402
 
 FIX = json.load(open(os.path.join(HERE, "fixtures", "jds.json")))
@@ -26,7 +26,7 @@ FIX = json.load(open(os.path.join(HERE, "fixtures", "jds.json")))
 def test_facts_match_labels():
     wrong = []
     for c in FIX["cases"]:
-        got = C.screen_facts(c["jd"])
+        got = F.screen_facts(c["jd"])
         if got != c["expect"]:
             wrong.append(f"{c['origin']}\n          got  {got}\n          want {c['expect']}")
     check(not wrong, f"{len(wrong)} of {len(FIX['cases'])} JDs misread:\n        "
@@ -37,13 +37,13 @@ def test_facts_match_labels():
 def test_fundraise_and_arr_figures_are_not_salaries():
     """'$12,000,000 Series A' is not a pay band. The salary window is what stops
     the digest printing 'comp ~$12,000k'."""
-    equal(C.screen_facts("We raised $12,000,000 and passed $30,000,000 ARR").get("comp"), None)
-    equal(C.screen_facts("Salary $130,000 - $165,000")["comp"], "$130k–$165k")
+    equal(F.screen_facts("We raised $12,000,000 and passed $30,000,000 ARR").get("comp"), None)
+    equal(F.screen_facts("Salary $130,000 - $165,000")["comp"], "$130k–$165k")
 
 
 @case
 def test_a_stated_range_beats_a_bare_minimum():
-    f = C.screen_facts("We want 4-6 years of product management experience. "
+    f = F.screen_facts("We want 4-6 years of product management experience. "
                        "Our CTO has 15+ years in the field.")
     equal(f["years"], "4–6 yrs")
     equal(f["years_min"], 4)
@@ -52,7 +52,7 @@ def test_a_stated_range_beats_a_bare_minimum():
 @case
 def test_hybrid_wins_over_the_word_remote():
     """A hybrid JD nearly always says 'remote' somewhere too."""
-    f = C.screen_facts("This hybrid role is 3 days a week in office, remote otherwise.")
+    f = F.screen_facts("This hybrid role is 3 days a week in office, remote otherwise.")
     equal(f["work_model"], "Hybrid · 3d in office")
 
 
@@ -60,14 +60,14 @@ def test_hybrid_wins_over_the_word_remote():
 def test_office_days_can_be_a_range_and_precede_the_count():
     """The Courted APM JD: never says "hybrid", puts the office word BEFORE the
     count, and gives a range. It read as a bare "Onsite" — harsher than the job."""
-    f = C.screen_facts("The team is NYC-based and in the office 3-4 days per week.")
+    f = F.screen_facts("The team is NYC-based and in the office 3-4 days per week.")
     equal(f["work_model"], "Hybrid \u00b7 3\u20134d in office")
 
 
 @case
 def test_five_days_in_office_stays_onsite():
     """The <5 correction must not turn a genuinely onsite role into hybrid."""
-    f = C.screen_facts("This is an onsite role: in the office 5 days a week.")
+    f = F.screen_facts("This is an onsite role: in the office 5 days a week.")
     equal(f["work_model"], "Onsite \u00b7 5d/wk")
 
 
@@ -75,21 +75,21 @@ def test_five_days_in_office_stays_onsite():
 def test_strip_html_handles_escaped_markup():
     """Greenhouse returns the JD as HTML-ESCAPED markup. Stripping before
     unescaping matches no tags, then the unescape puts them back as text."""
-    got = C.strip_html("&lt;ul&gt;&lt;li&gt;5+ years&lt;/li&gt;&lt;/ul&gt;&nbsp;done")
+    got = NET.strip_html("&lt;ul&gt;&lt;li&gt;5+ years&lt;/li&gt;&lt;/ul&gt;&nbsp;done")
     check("<" not in got and ">" not in got, f"tags survived: {got!r}")
     equal(got, "5+ years done")
 
 
 @case
 def test_strip_html_handles_plain_markup_too():
-    equal(C.strip_html("<p>Plain <b>html</b> too</p>"), "Plain html too")
+    equal(NET.strip_html("<p>Plain <b>html</b> too</p>"), "Plain html too")
 
 
 @case
 def test_jd_window_is_big_enough_to_reach_the_requirements():
     """1500 chars put the requirements block and the pay band out of reach on a
     typical JD; both live near the bottom."""
-    check(C.JD_CHARS >= 6000, f"JD_CHARS={C.JD_CHARS} is too small to see requirements")
+    check(CFG.JD_CHARS >= 6000, f"JD_CHARS={CFG.JD_CHARS} is too small to see requirements")
 
 
 @case
@@ -97,13 +97,13 @@ def test_the_fit_sentence_does_not_repeat_the_chips():
     """A card stated the experience bar THREE times: as a chip, in this
     sentence, and again in a trailing gap line. The chips own years and
     location; this sentence owns what the work actually is."""
-    item = {"breakdown": C.score_breakdown(
+    item = {"breakdown": SC.score_breakdown(
                 "Product Manager",
                 "5+ years of product management experience. Roadmap, PRDs, "
                 "Figma. AI workflow automation."),
-            "facts": C.screen_facts("5+ years of product management experience"),
+            "facts": F.screen_facts("5+ years of product management experience"),
             "loc_tier": "nyc", "funding": {}}
-    line = C.fit_sentence(item).lower()
+    line = F.fit_sentence(item).lower()
     for banned in ("yrs", "years", "stretch", "nyc", "us-remote"):
         check(banned not in line, f"fit sentence repeats {banned!r}: {line!r}")
     check(line, "fit sentence should still say what the work is")
@@ -114,11 +114,11 @@ def test_the_card_states_the_experience_bar_exactly_once():
     item = {"title": "Product Manager", "company": "acme", "url": "http://x",
             "location": "Remote", "source": "Lever", "posted_ts": None,
             "loc_tier": "us-remote", "funding": {}, "work_mode": "remote",
-            "facts": C.screen_facts("5+ years of product management experience")}
-    item["breakdown"] = C.score_breakdown(
+            "facts": F.screen_facts("5+ years of product management experience")}
+    item["breakdown"] = SC.score_breakdown(
         "Product Manager", "5+ years of product management experience. Roadmap.")
     item["q"] = item["breakdown"]["total"]
-    text = re.sub(r"<[^>]+>", " ", C.card(item)).lower()
+    text = re.sub(r"<[^>]+>", " ", R.card(item)).lower()
     equal(text.count("5+ yrs"), 1, f"the bar is stated more than once: {text}")
     # ...and the location is not printed twice either ("Remote" + "US-remote").
     check(text.count("remote") <= 2, f"location repeated: {text}")
@@ -132,7 +132,7 @@ def test_matched_terms_are_cased_the_way_people_write_them():
                       ("ai agents", "AI agents"), ("prd", "PRD"),
                       ("typescript", "TypeScript"), ("roadmap", "roadmap"),
                       ("real estate", "real estate")]:
-        equal(C._pretty_term(raw), want)
+        equal(F._pretty_term(raw), want)
 
 
 @case
@@ -143,9 +143,9 @@ def test_a_remote_role_is_not_labelled_remote_twice():
             "location": "Remote", "source": "Lever", "posted_ts": None,
             "loc_tier": "us-remote", "funding": {}, "work_mode": "remote",
             "facts": {"work_model": "Remote"}}
-    item["breakdown"] = C.score_breakdown("Product Manager", "2+ years. Roadmap.")
+    item["breakdown"] = SC.score_breakdown("Product Manager", "2+ years. Roadmap.")
     item["q"] = item["breakdown"]["total"]
-    text = re.sub(r"<[^>]+>", " ", C.card(item)).lower()
+    text = re.sub(r"<[^>]+>", " ", R.card(item)).lower()
     equal(text.count("remote"), 1, f"remote appears more than once: {text}")
 
 
@@ -160,12 +160,12 @@ def test_a_hiring_lead_carries_no_fit_verdict():
             "posted_ts": None, "loc_tier": "us-remote", "work_mode": "remote",
             "funding": {}, "facts": {}, "lead": True,
             "breakdown": {"parts": [], "misses": [], "total": 34}, "q": 34}
-    text = re.sub(r"<[^>]+>", " ", C.card(lead))
+    text = re.sub(r"<[^>]+>", " ", R.card(lead))
     for verdict in ("A stretch", "Worth a look", "Good fit", "Strong fit"):
         check(verdict not in text, f"lead card shows a fit verdict: {verdict}")
     # ...but a real posting still gets one.
     posting = dict(lead, source="Ashby", lead=False)
-    check(any(v in re.sub(r"<[^>]+>", " ", C.card(posting))
+    check(any(v in re.sub(r"<[^>]+>", " ", R.card(posting))
               for v in ("A stretch", "Worth a look", "Good fit", "Strong fit")),
           "a board posting lost its fit verdict")
 
@@ -179,7 +179,7 @@ def test_a_leads_email_is_not_split_into_match_tiers():
               "loc_tier": "us-remote", "work_mode": "remote", "funding": {},
               "facts": {}, "lead": True, "q": 30,
               "breakdown": {"parts": [], "misses": [], "total": 30}}]
-    html_out = C.build_html(leads, title="Hiring posts from X")
+    html_out = R.build_html(leads, title="Hiring posts from X")
     check("Hiring posts from X" in html_out, "custom title missing")
     check("Best matches" not in html_out, "leads were split into match tiers")
     check("hiring post" in html_out, "no lead-style summary line")
@@ -189,25 +189,25 @@ def test_a_leads_email_is_not_split_into_match_tiers():
 def test_subject_templates():
     """Subjects are templates so they can be reworded without code changes.
     Only {date} is substituted."""
-    equal(C.subject_for("No Placeholder Here"), "No Placeholder Here",
+    equal(M.subject_for("No Placeholder Here"), "No Placeholder Here",
           "a template with no placeholder should pass through unchanged")
-    for tmpl in (C.SUBJECT_JOBS, C.SUBJECT_X):
-        got = C.subject_for(tmpl)
+    for tmpl in (CFG.SUBJECT_JOBS, CFG.SUBJECT_X):
+        got = M.subject_for(tmpl)
         check("{date}" not in got, f"date was not substituted: {got}")
         check(got != tmpl, f"template unchanged: {tmpl}")
     # A stray brace in a user-set subject must not break the send.
-    equal(C.subject_for("Jobs {oops}"), "Jobs {oops}")
+    equal(M.subject_for("Jobs {oops}"), "Jobs {oops}")
 
 
 @case
 def test_the_two_digests_get_different_subjects():
     """They arrive in the same run; identical subjects would thread them
     together in Gmail."""
-    check(C.subject_for(C.SUBJECT_JOBS) != C.subject_for(C.SUBJECT_X),
+    check(M.subject_for(CFG.SUBJECT_JOBS) != M.subject_for(CFG.SUBJECT_X),
           "the job digest and the X digest share a subject line")
     # Both are dated: Gmail threads on subject, and a static one buries each new
     # digest inside a single growing conversation.
-    for tmpl in (C.SUBJECT_JOBS, C.SUBJECT_X):
+    for tmpl in (CFG.SUBJECT_JOBS, CFG.SUBJECT_X):
         check("{date}" in tmpl, f"{tmpl!r} has no date, so these will thread")
 
 
@@ -217,15 +217,15 @@ def test_digests_thread_by_reference_not_by_identical_subjects():
     Message-ID, so the client files them as one conversation while the subject
     keeps its date. The alternative -- identical subjects -- threads by accident
     and costs you the date."""
-    C.EMAIL_TO = "me@example.com"
-    jobs, x = C.thread_root("jobs"), C.thread_root("x")
-    equal(jobs, C.thread_root("jobs"), "the root must be stable across runs")
+    M.EMAIL_TO = "me@example.com"
+    jobs, x = M.thread_root("jobs"), M.thread_root("x")
+    equal(jobs, M.thread_root("jobs"), "the root must be stable across runs")
     check(jobs != x, "both digests would land in the same conversation")
     check(jobs.startswith("<") and jobs.endswith(">"), f"not a Message-ID: {jobs}")
     # Derived from the recipient, so two forks never collide.
-    C.EMAIL_TO = "someone-else@example.com"
-    check(C.thread_root("jobs") != jobs, "the root ignores who it is sent to")
-    C.EMAIL_TO = "me@example.com"
+    M.EMAIL_TO = "someone-else@example.com"
+    check(M.thread_root("jobs") != jobs, "the root ignores who it is sent to")
+    M.EMAIL_TO = "me@example.com"
 
 
 if __name__ == "__main__":
