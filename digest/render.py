@@ -1,8 +1,7 @@
-from datetime import datetime
 import html
 import json
 import re
-from .filters import fit_sentence
+from .filters import company_blurb, fit_sentence
 from .location import BEST_MATCH_MIN
 from .net import age_label
 from .scoring import needs_relocation
@@ -187,6 +186,11 @@ def card(item, dim=False):
         chips.append(_chip(esc(item["round"])))
 
     facts_row = ""
+    # What the company does, then what the role asks for. Leads skip it: their
+    # content is a summary of a hiring post, not the company's own words.
+    about = "" if item.get("lead") else company_blurb(item.get("company"), item.get("content"))
+    about_row = (f"<div style=\"font-family:{FONT};margin:11px 0 0;font-size:13px;"
+                 f"line-height:20px;color:{INK2}\">{esc(about)}</div>") if about else ""
     fit = fit_sentence(item)
     fit_row = (f"<div style=\"font-family:{FONT};margin:11px 0 0;font-size:13px;"
                f"line-height:20px;color:{INK}\">{fit}</div>") if fit else ""
@@ -245,6 +249,7 @@ def card(item, dim=False):
            f"font-size:12px;font-weight:600;white-space:nowrap\">{score_text}</span>"
            f"</td>" if score_text else "")
         + f"</tr></table>"
+        f"{about_row}"
         f"{fit_row}"
         f"{context_block(item)}"
         f"{match_line(item)}"
@@ -312,13 +317,10 @@ def discovery_banner():
 
 
 def build_html(items, title="Companies digest", banner=""):
-    now = datetime.now().strftime("%A, %B %-d")
-    clock = datetime.now().strftime("%-I:%M %p").lower()
     header = (
         f"<div style=\"font-family:{FONT}\">"
         f"<div style=\"font-size:26px;font-weight:600;color:{INK};letter-spacing:-.02em\">"
         f"{html.escape(title)}</div>"
-        f"<div style=\"margin:5px 0 0;font-size:13px;color:{INK3}\">{now} \u00b7 {clock}</div>"
         f"</div>") + banner
     if not items:
         return _shell(header + (
@@ -345,7 +347,7 @@ def build_html(items, title="Companies digest", banner=""):
                f"color:{INK2}\">{summary}</div>")
     return _shell(
         header
-        + section("Best matches", "you clear the bar and the work lines up", best)
+        + section("Best matches", "", best)
         + section("Worth a look", "a fit, with something that doesn't line up",
                   rest, dim=True)
         + scoring_footer())

@@ -251,6 +251,59 @@ def fit_sentence(item):
     return " \u00b7 ".join(html.escape(b) for b in bits)
 
 
+# --- what the company does -------------------------------------------------
+# One sentence lifted from the company's own JD. No LLM call: nearly every JD
+# opens with "Etched is building..." or "At Rhoda AI, we're building...". On 38
+# live boards this found a usable line for ~30; the rest get no about line,
+# which beats a wrong one.
+_ABOUT_VERB = (r"(?:is|are|builds?|building|helps?|helping|makes?|provides?|develops?|"
+               r"creates?|powers?|enables?|delivers?|delivering|designs?|automates?|"
+               r"connects?|transforms?|pioneer\w*|disrupt\w*|on a mission|the team behind)")
+_ABOUT_SUBJECT = re.compile(
+    r"^(?:about (?:us|[\w&.' -]{1,40}?)\s*[:\-\u2013\u2014]?\s*)?"
+    r"(?:at ([\w&.' -]{1,40}?),\s*)?"
+    r"([\w&.'\u2019-]+(?:\s+[\w&.'\u2019-]+){0,3}?)"
+    rf"(?:\s*\([^)]*\))?,?\s+(?:\w+\s+){{0,2}}?{_ABOUT_VERB}\b", re.I)
+# A sentence about the role or the perks, not the company. "X is hiring a GM"
+# has the company as its subject and still says nothing about what X does.
+_ABOUT_JUNK = re.compile(
+    r"\b(hiring|seeking|looking for|offer|benefit|salary|401|pto|equal opportunity|"
+    r"candidates?|you'?ll|your|team is growing|this role|believe|employees|"
+    r"committed to)\b", re.I)
+_ABOUT_SPLIT = re.compile(r"(?<=[.!?])\s+|\n+")
+
+
+def _alnum(s):
+    return re.sub(r"[^a-z0-9]", "", (s or "").lower())
+
+
+def _names_company(words, company):
+    """"Bishop Fox" names board token "bishopfox"; "Redox" names "redoxengine"."""
+    w, c = _alnum(words), _alnum(company)
+    return len(w) >= 3 and bool(c) and (w.startswith(c) or c.startswith(w))
+
+
+def company_blurb(company, content, limit=200):
+    """What the company does, in one sentence from its own JD, or ""."""
+    fallback = ""
+    for s in _ABOUT_SPLIT.split((content or "")[:4000]):
+        s = re.sub(r"\s+", " ", s).strip(" -\u2022*#")
+        if not 40 <= len(s) <= 400 or _ABOUT_JUNK.search(s):
+            continue
+        m = _ABOUT_SUBJECT.match(s)
+        if not m:
+            continue
+        at, subj = m.group(1), m.group(2)
+        if (at and _names_company(at, company)) or _names_company(subj, company):
+            fallback = s
+            break
+        if not fallback and re.fullmatch(r"we(?:'re|\u2019re| are)?", subj, re.I):
+            fallback = s
+    if len(fallback) > limit:
+        fallback = fallback[:limit].rsplit(" ", 1)[0] + "\u2026"
+    return fallback
+
+
 # Built on first use, not at import: _apply_profile() may have replaced
 # RESUME["skills"]/["domains"] from profile.compiled.json by then.
 _SKILL_RE = _DOMAIN_RE = None

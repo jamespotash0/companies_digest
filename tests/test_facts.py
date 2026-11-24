@@ -228,5 +228,25 @@ def test_digests_thread_by_reference_not_by_identical_subjects():
     M.EMAIL_TO = "me@example.com"
 
 
+@case
+def test_company_blurb_says_what_the_company_does():
+    # Captured from live boards. The board token rarely matches the company's
+    # written name, so the match has to survive "bishopfox" vs "Bishop Fox".
+    jd = ("Bishop Fox is the leading authority in offensive security, providing "
+          "solutions ranging from continuous penetration testing to red teaming.\n"
+          "We offer a 401(k) with a 4% company match.")
+    equal(F.company_blurb("bishopfox", jd)[:38], "Bishop Fox is the leading authority in")
+    equal(F.company_blurb("rhoda-ai", "About\nAt Rhoda AI, we\u2019re building the next "
+                          "generation of generalist intelligent robots."),
+          "At Rhoda AI, we\u2019re building the next generation of generalist intelligent robots.")
+
+
+@case
+def test_company_blurb_never_returns_a_perk_or_hiring_line():
+    for jd in ("PadSplit is hiring a Host Experience Manager (HSM) to serve as the partner.",
+               "We offer a 401(k) with a 4% company match and generous PTO for everyone.",
+               "We believe collaboration is key, so our remote-first teams meet twice a year."):
+        equal(F.company_blurb("padsplit", jd), "", jd[:30])
+
 if __name__ == "__main__":
     main("facts")
