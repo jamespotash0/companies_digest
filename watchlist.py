@@ -212,6 +212,15 @@ PROBES = [("greenhouse", probe_greenhouse),
           ("ashby", probe_ashby)]
 
 
+def _held(d, name, domain=None):
+    """(provider, token) pairs already on the watchlist for this company's guesses.
+
+    _probe_company skips tokens we hold, so without this check a company that
+    Getro already added reads as "no board": it sat in `pending` being re-probed
+    for nothing, and its funding row got no tokens to flag postings with."""
+    return [(p, t) for t in candidate_tokens(name, domain) for p in PROVIDERS if t in d[p]]
+
+
 def _probe_company(d, name, domain=None):
     """Probe one company's candidate tokens against every ATS, mutating `d`.
     Returns the list of (provider, token) newly added."""
@@ -250,15 +259,16 @@ def detect_and_add(name, domain=None, funding=None):
             _save(d)
         return []
 
-    found = _probe_company(d, name, domain)
+    held = _held(d, name, domain)
+    found = [] if held else _probe_company(d, name, domain)
     d["checked"].append(key)
-    if found:
+    if held or found:
         d["pending"].pop(key, None)
     else:
         d["pending"][key] = {"name": name, "domain": domain or "",
                              "first_seen": _today(), "tries": 1}
     if funding:
-        _record_funding(d, key, name, funding, [t for _, t in found])
+        _record_funding(d, key, name, funding, [t for _, t in held or found])
     _save(d)
     if found:
         print(f"[watchlist] {name}: {found}")
@@ -320,13 +330,16 @@ def reprobe_pending(limit=None):
         tried += 1
         meta["tries"] = meta.get("tries", 0) + 1
         meta["last_try"] = _today()
-        found = _probe_company(d, meta.get("name") or key, meta.get("domain") or None)
-        if found:
+        held = _held(d, meta.get("name") or key, meta.get("domain") or None)
+        found = [] if held else _probe_company(d, meta.get("name") or key,
+                                               meta.get("domain") or None)
+        if held or found:
             pend.pop(key, None)
-            landed.append((meta.get("name") or key, found))
             if key in d["funded"]:
                 d["funded"][key]["tokens"] = sorted(
-                    set(d["funded"][key].get("tokens", []) + [t for _, t in found]))
+                    set(d["funded"][key].get("tokens", []) + [t for _, t in held or found]))
+        if found:
+            landed.append((meta.get("name") or key, found))
             print(f"[watchlist] re-probe hit — {meta.get('name') or key}: {found}")
 
     # Age out stale funding flags so the digest never says "just raised" about a

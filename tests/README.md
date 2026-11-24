@@ -8,6 +8,7 @@ repo root, or `python tests/run.py gates` to run one module.
 | `test_gates.py` | `title_is_target`, `location_tier` — what you ever get to see |
 | `test_facts.py` | `screen_facts`, `strip_html`, `fit_sentence` — the screening line |
 | `test_scoring.py` | `score_breakdown` and the substring traps it keeps falling into |
+| `test_watchlist.py` | `detect_and_add` — a company already on the watchlist is resolved, not left pending |
 | `verify_grok_quotes.py` | **not** part of `run.py` — hits the network, see below |
 | `check_profile.py` | **not** part of `run.py` — validates YOUR compiled profile, see below |
 
