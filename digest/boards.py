@@ -145,9 +145,12 @@ def _loc_str(d, *keys):
 
 def fetch_workable(token):
     out = []
+    # ponytail: no retry. Workable's 429s outlast a 30s wait, so retrying only
+    # cost ~31s per throttled board (43 min a run) and recovered none. Pace the
+    # serial worker if the dropped boards start to matter.
     try:
         data = post_json(f"https://apply.workable.com/api/v1/accounts/{token}/jobs",
-                         {"query": ""})
+                         {"query": ""}, retries=0)
         jobs = data.get("results") or []
     except Exception as e:
         print(f"[warn] workable {token}: {e}")
@@ -165,7 +168,8 @@ def fetch_workable(token):
         # Only spend a detail call on a title we'd actually keep.
         if fetched < BOARD_MAX_DETAIL and title_is_target(j.get("title", "")):
             try:
-                d = get_json(f"https://apply.workable.com/api/v1/accounts/{token}/jobs/{shortcode}")
+                d = get_json(f"https://apply.workable.com/api/v1/accounts/{token}/jobs/{shortcode}",
+                             retries=0)
                 content = strip_html(" ".join(
                     x for x in (d.get("description"), d.get("requirements"), d.get("benefits")) if x))
                 posted = d.get("published") or posted

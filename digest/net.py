@@ -9,17 +9,17 @@ UA = {"User-Agent": "Mozilla/5.0 (companies-digest)"}
 
 
 # One retry at most: with ~4,500 boards a run, backing off three times on every
-# throttled call turned a 2-minute fetch into 40.
-def get_json(url, timeout=25):
-    return open_json(urllib.request.Request(url, headers=UA), timeout, retries=1)
+# throttled call turned a 2-minute fetch into 40. Workable passes retries=0.
+def get_json(url, timeout=25, retries=1):
+    return open_json(urllib.request.Request(url, headers=UA), timeout, retries=retries)
 
 
-def post_json(url, payload, timeout=25):
+def post_json(url, payload, timeout=25, retries=1):
     req = urllib.request.Request(
         url, data=json.dumps(payload).encode(),
         headers={**UA, "Content-Type": "application/json", "Accept": "application/json"},
         method="POST")
-    return open_json(req, timeout, retries=1)
+    return open_json(req, timeout, retries=retries)
 
 
 def strip_html(t):
