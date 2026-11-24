@@ -6729,7 +6729,7 @@
     "socure": 600,
     "x.ai": 15000,
     "odeko": 600,
-    "remote": 15000,
+    "remote": 3000,
     "namely": 120,
     "fundera": 120,
     "heartbeat health": 120,
@@ -17899,204 +17899,213 @@
     "sharechat": 3000,
     "zenline": 5,
     "volter": 5,
-    "vanilla steel": 25
+    "vanilla steel": 25,
+    "canadian museum of nature": 600,
+    "seawolf technologies": 5,
+    "afeka \u2013 the academic college of engineering in tel aviv": 600,
+    "krieger schechter day school": 120,
+    "deepen ai": 120,
+    "artaflex": 120,
+    "datalogz": 25,
+    "first horizon bank": 15000,
+    "qnami": 25
   },
   "pending": {
     "withcoverage": {
       "name": "WithCoverage",
       "domain": "withcoverage.com",
       "first_seen": "2026-10-02",
-      "tries": 10,
-      "last_try": "2026-11-23"
+      "tries": 11,
+      "last_try": "2026-11-24"
     },
     "unveilr ai": {
       "name": "Unveilr AI",
       "domain": "unveilrai.com",
       "first_seen": "2026-10-02",
-      "tries": 10,
-      "last_try": "2026-11-23"
+      "tries": 11,
+      "last_try": "2026-11-24"
     },
     "flexpoint": {
       "name": "FlexPoint",
       "domain": "",
       "first_seen": "2026-10-03",
-      "tries": 9,
-      "last_try": "2026-11-23"
+      "tries": 10,
+      "last_try": "2026-11-24"
     },
     "landa": {
       "name": "Landa",
       "domain": "landa.app",
       "first_seen": "2026-10-03",
-      "tries": 8,
-      "last_try": "2026-11-23"
+      "tries": 9,
+      "last_try": "2026-11-24"
     },
     "trashlab": {
       "name": "TrashLab",
       "domain": "",
       "first_seen": "2026-10-03",
-      "tries": 7,
-      "last_try": "2026-11-23"
+      "tries": 8,
+      "last_try": "2026-11-24"
     },
     "homelight": {
       "name": "HomeLight",
       "domain": "homelight.com",
       "first_seen": "2026-10-03",
-      "tries": 8,
-      "last_try": "2026-11-23"
+      "tries": 9,
+      "last_try": "2026-11-24"
     },
     "babel intelligence": {
       "name": "Babel Intelligence",
       "domain": "",
       "first_seen": "2026-10-03",
-      "tries": 9,
-      "last_try": "2026-11-23"
+      "tries": 10,
+      "last_try": "2026-11-24"
     },
     "vitalize care": {
       "name": "Vitalize Care",
       "domain": "",
       "first_seen": "2026-10-03",
-      "tries": 7,
-      "last_try": "2026-11-23"
+      "tries": 8,
+      "last_try": "2026-11-24"
     },
     "writer": {
       "name": "Writer",
       "domain": "writer.com",
       "first_seen": "2026-10-03",
-      "tries": 7,
-      "last_try": "2026-11-23"
+      "tries": 8,
+      "last_try": "2026-11-24"
     },
     "fredrin": {
       "name": "Fredrin",
       "domain": "fredrin.com",
       "first_seen": "2026-10-03",
-      "tries": 8,
-      "last_try": "2026-11-23"
+      "tries": 9,
+      "last_try": "2026-11-24"
     },
     "the openai deployment company": {
       "name": "The OpenAI Deployment Company",
       "domain": "",
       "first_seen": "2026-10-03",
-      "tries": 7,
-      "last_try": "2026-11-23"
+      "tries": 8,
+      "last_try": "2026-11-24"
     },
     "tessera labs": {
       "name": "Tessera Labs",
       "domain": "tessera.io",
       "first_seen": "2026-10-03",
-      "tries": 7,
-      "last_try": "2026-11-23"
+      "tries": 8,
+      "last_try": "2026-11-24"
     },
     "metropolis": {
       "name": "Metropolis",
       "domain": "metropolis.io",
       "first_seen": "2026-10-03",
-      "tries": 8,
-      "last_try": "2026-11-23"
+      "tries": 9,
+      "last_try": "2026-11-24"
     },
     "anysphere": {
       "name": "Anysphere",
       "domain": "anysphere.com",
       "first_seen": "2026-10-03",
-      "tries": 9,
-      "last_try": "2026-11-23"
+      "tries": 10,
+      "last_try": "2026-11-24"
     },
     "middesk": {
       "name": "Middesk",
       "domain": "middesk.com",
       "first_seen": "2026-10-03",
-      "tries": 8,
-      "last_try": "2026-11-23"
+      "tries": 9,
+      "last_try": "2026-11-24"
     },
     "stainless": {
       "name": "Stainless",
       "domain": "stainlessapi.com",
       "first_seen": "2026-10-03",
-      "tries": 7,
-      "last_try": "2026-11-23"
+      "tries": 8,
+      "last_try": "2026-11-24"
     },
     "floracene": {
       "name": "Floracene",
       "domain": "floracene.ai",
       "first_seen": "2026-10-03",
-      "tries": 8,
-      "last_try": "2026-11-23"
+      "tries": 9,
+      "last_try": "2026-11-24"
     },
     "ellis ai": {
       "name": "Ellis AI",
       "domain": "ellis.ai",
       "first_seen": "2026-10-03",
-      "tries": 9,
-      "last_try": "2026-11-23"
+      "tries": 10,
+      "last_try": "2026-11-24"
     },
     "trayd": {
       "name": "Trayd",
       "domain": "trayd.com",
       "first_seen": "2026-10-03",
-      "tries": 7,
-      "last_try": "2026-11-23"
+      "tries": 8,
+      "last_try": "2026-11-24"
     },
     "clearest health": {
       "name": "Clearest Health",
       "domain": "clearestco.com",
       "first_seen": "2026-10-03",
-      "tries": 9,
-      "last_try": "2026-11-23"
+      "tries": 10,
+      "last_try": "2026-11-24"
     },
     "volaren": {
       "name": "Volaren",
       "domain": "volaren.com",
       "first_seen": "2026-10-03",
-      "tries": 7,
-      "last_try": "2026-11-23"
+      "tries": 8,
+      "last_try": "2026-11-24"
     },
     "pennant": {
       "name": "Pennant",
       "domain": "pennant.ai",
       "first_seen": "2026-10-03",
-      "tries": 8,
-      "last_try": "2026-11-23"
+      "tries": 9,
+      "last_try": "2026-11-24"
     },
     "multiplier": {
       "name": "Multiplier",
       "domain": "multiplier.ai",
       "first_seen": "2026-10-03",
-      "tries": 8,
-      "last_try": "2026-11-23"
+      "tries": 9,
+      "last_try": "2026-11-24"
     },
     "hestus": {
       "name": "Hestus",
       "domain": "hestus.co",
       "first_seen": "2026-10-03",
-      "tries": 8,
-      "last_try": "2026-11-23"
+      "tries": 9,
+      "last_try": "2026-11-24"
     },
     "amr operations automation startup s innovations": {
       "name": "AMR Operations Automation Startup S innovations",
       "domain": "s-innovations.co",
       "first_seen": "2026-10-03",
-      "tries": 10,
-      "last_try": "2026-11-23"
+      "tries": 11,
+      "last_try": "2026-11-24"
     },
     "health tech startup allodirect": {
       "name": "Health tech startup AlloDirect",
       "domain": "allo.direct",
       "first_seen": "2026-10-03",
-      "tries": 8,
-      "last_try": "2026-11-23"
+      "tries": 9,
+      "last_try": "2026-11-24"
     },
     "robotics startup fieldai is set to raise $700 million at a $": {
       "name": "Robotics startup FieldAI is set to raise $700 million at a $",
       "domain": "fieldai.com",
       "first_seen": "2026-10-03",
-      "tries": 7,
-      "last_try": "2026-11-23"
+      "tries": 8,
+      "last_try": "2026-11-24"
     },
     "robotics ai developer fieldai reportedly raising $700m in fu": {
       "name": "Robotics AI developer FieldAI reportedly raising $700M in fu",
       "domain": "fieldai.com",
       "first_seen": "2026-10-03",
-      "tries": 8,
-      "last_try": "2026-11-23"
+      "tries": 9,
+      "last_try": "2026-11-24"
     },
     "rho": {
       "name": "Rho",
@@ -18108,22 +18117,22 @@
       "name": "GlossGenius",
       "domain": "glossgenius.com",
       "first_seen": "2026-10-04",
-      "tries": 6,
-      "last_try": "2026-11-23"
+      "tries": 7,
+      "last_try": "2026-11-24"
     },
     "guac": {
       "name": "Guac",
       "domain": "",
       "first_seen": "2026-10-04",
-      "tries": 6,
-      "last_try": "2026-11-23"
+      "tries": 7,
+      "last_try": "2026-11-24"
     },
     "fluidstack": {
       "name": "FluidStack",
       "domain": "fluidstack.io",
       "first_seen": "2026-10-04",
-      "tries": 6,
-      "last_try": "2026-11-23"
+      "tries": 7,
+      "last_try": "2026-11-24"
     },
     "starbridge": {
       "name": "Starbridge",
@@ -18135,22 +18144,22 @@
       "name": "Amboras",
       "domain": "amboras.com",
       "first_seen": "2026-10-04",
-      "tries": 7,
-      "last_try": "2026-11-23"
+      "tries": 8,
+      "last_try": "2026-11-24"
     },
     "garner health": {
       "name": "Garner Health",
       "domain": "garnerhealth.com",
       "first_seen": "2026-10-04",
-      "tries": 6,
-      "last_try": "2026-11-23"
+      "tries": 7,
+      "last_try": "2026-11-24"
     },
     "ashby": {
       "name": "Ashby",
       "domain": "ashbyhq.com",
       "first_seen": "2026-10-04",
-      "tries": 7,
-      "last_try": "2026-11-23"
+      "tries": 8,
+      "last_try": "2026-11-24"
     },
     "threshold ai": {
       "name": "Threshold AI",
@@ -18174,8 +18183,8 @@
       "name": "Datalinx AI",
       "domain": "datalinx.ai",
       "first_seen": "2026-10-04",
-      "tries": 6,
-      "last_try": "2026-11-23"
+      "tries": 7,
+      "last_try": "2026-11-24"
     },
     "tivara": {
       "name": "Tivara",
@@ -18187,22 +18196,22 @@
       "name": "HeyMilo",
       "domain": "heymilo.ai",
       "first_seen": "2026-10-04",
-      "tries": 6,
-      "last_try": "2026-11-23"
+      "tries": 7,
+      "last_try": "2026-11-24"
     },
     "proxima": {
       "name": "Proxima",
       "domain": "proximabiotech.com",
       "first_seen": "2026-10-04",
-      "tries": 4,
-      "last_try": "2026-11-23"
+      "tries": 5,
+      "last_try": "2026-11-24"
     },
     "ellipsis labs": {
       "name": "Ellipsis Labs",
       "domain": "ellipsislabs.com",
       "first_seen": "2026-10-04",
-      "tries": 6,
-      "last_try": "2026-11-23"
+      "tries": 7,
+      "last_try": "2026-11-24"
     },
     "sydecar": {
       "name": "Sydecar",
@@ -18220,8 +18229,8 @@
       "name": "Mia Labs",
       "domain": "mia.inc",
       "first_seen": "2026-10-04",
-      "tries": 5,
-      "last_try": "2026-11-23"
+      "tries": 6,
+      "last_try": "2026-11-24"
     },
     "slice global": {
       "name": "Slice Global",
@@ -18233,8 +18242,8 @@
       "name": "Handshake AI",
       "domain": "handshake.com",
       "first_seen": "2026-10-04",
-      "tries": 6,
-      "last_try": "2026-11-23"
+      "tries": 7,
+      "last_try": "2026-11-24"
     },
     "treasure ai": {
       "name": "Treasure AI",
